@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h1>
+        {% if user.image %}
+        <img src="{{user.image.url}}" alt="사진"> 
+        {% endif %}
+        {{user.name}}</h1>
+    <div>
+        과목 : {{user.major}}
+        <br>
+        학번 : {{user.studentNum}}
+        <br>
+        캠퍼스명 : {{user.campus}}
+        <br>
+        이메일 : {{user.schoolEmail}}@g.hongik.ac.kr
+        <br>
+        <br>
+        경력
+        <br>
+        회사 : {{user.career1Company}} 직함 : {{user.career1Title}}
+        <br>
+        시작연도 : {{user.career1YearStart}} 시작 월 : {{user.career1MonthStart}}
+        <br>
+        종료연도 : {{user.career1YearEnd}} 종료 월 : {{user.career1MonthEnd}}
+        <br>
+        역할 / 성과 : {{user.career1RoleAchievement}}
+        <br>
+        <br>
+        대학생 활동
+        <br>
+        활동 명 : {{user.university1Activity}} 직함 : {{user.university1Title}}
+        <br>
+        시작연도 : {{user.university1YearStart}} 시작 월 : {{user.university1MonthStart}}
+        <br>
+        종료연도 : {{user.university1YearEnd}} 종료 월 : {{user.university1MonthEnd}}
+        <br>
+        역할 / 성과 : {{user.university1RoleAchievement}}
+        <br>
+        <br>
+        웹사이트
+        <br>
+        이름 : {{user.websiteName}}
+        <br>
+        URL : {{user.websiteURL}}
+    </div>
+{% endif %}
+<a href="{%url 'home'%}">홈화면</a>
+{% endblock %}
