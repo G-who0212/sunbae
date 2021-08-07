@@ -14,43 +14,94 @@
             <h2><a href="{%url 'home'%}">홈화면</a></h2>
 
             <!-- Start comment test html -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="col-md-12">
-                        {% csrf_token %}
-                        <div class="form-group row">
-                            <textarea class="form-control" id="comment-content" rows="3" placeholder="댓글을 입력해주세요."></textarea>
-                        </div>
-                        <div class="text-right" style="float:right">
-                            <button id="comment-write" class="btn btn-sm">댓글달기</button>
-                        </div>
-                    </div>
-                    <hr>
-                    <div id="comment-container">
-                        {% if comments %}
-                            {% for comment in comments %}
-                            <div id='{{ comment.id }}'>
-                                <strong>{{ comment.writer }}</strong>
-                                <span style="float:right">{{ comment.pub_date }}</span>
-                                <div>
-                                    <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
-                                    <div style="text-align: right;">
-                                    {% if comment.writer == request.user %}
-                                        <a onclick="commentModify('{{comment.id}}');">수정</a>
-                                        <a onclick="commentDelete('{{comment.id}}');">삭제</a>
-                                    {% endif %}
-                                    </div>
-                                </div>
-                                <hr>
+            {% if user.is_authenticated %}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-md-12">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <textarea class="form-control" id="comment_content" rows="3" placeholder="댓글을 입력해주세요."></textarea>
                             </div>
-                            {% endfor %}
-                        {% endif %}
-                        <input type="hidden" id="comment_writer" value={{request.user}}>
-                        <div id="comment_list"></div>
+                            <div class="text-right" style="float:right">
+                                <button id="comment_write" class="btn btn-sm">댓글달기</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="comment_container">
+                            {% if comments %}
+                                {% for comment in comments %}
+                                <div id='{{ comment.id }}'>
+                                    <strong>{{ comment.user.name }}</strong>{{ comment.user.major }}
+                                    <span style="float:right">{{ comment.pub_date }}</span>
+                                    <div>
+                                        <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
+                                        <div style="text-align: right;">
+                                        {% if comment.user == user %}
+                                            <a onclick="updateComment('{{comment.id}}');">수정</a>
+                                            <a onclick="deleteComment('{{comment.id}}');">삭제</a>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                            <input type="hidden" id="comment_writer_id" value={{user.id}}>
+                            <div id="comment_list"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
             <!-- End comment test html -->
     </div>    
 
+    <!-- Start comment javascript -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#comment_write').click(function () {
+                let content = $('#comment_content').val();
+                let writer_id = $('#comment_writer_id').val();
+                if (content.length > 0) {
+                    createComment(content, writer_id);
+                }
+                else {
+                    alert('댓글을 입력해주세요.');
+                }
+            })
+        })
+
+        function createComment(content, writer_id) {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'comment_create' post.id %}",
+                dataType: "json",
+                data: {
+                    'writer_id': writer_id,
+                    'content': content,
+                    'csrfmiddlewaretoken': `{{csrf_token}}`,
+                },
+                success: function (response) {
+                    let tempHtml = addComment(response);
+                    $('#comment_list').append(tempHtml);
+                    $('#comment_content').val("");
+                }
+            })
+        }
+
+        function addComment(response) {
+            return `<div id=${response.comment_id}>
+                        <strong>${response.writer_name}</strong>${response.writer_major}
+                        <span style="float:right">${response.pub_date}</span>
+                        <div>
+                            <div style="white-space:pre-wrap; text-align:left;">${response.content}</div>
+                            <div style="text-align: right;">
+                            <a onclick="deleteComment('${response.comment_id}');">수정</a>
+                            <a onclick="updateComment('${response.comment_id}');">삭제</a>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>`
+        }
+    </script>
+    <!-- End comment javascript -->
 {% endblock %}

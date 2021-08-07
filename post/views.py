@@ -6,6 +6,7 @@ from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from .models import Post, Comment
 from .forms import PostForm
+from account.models import CustomUser
 
 # Create your views here.
 def home(request):
@@ -53,20 +54,23 @@ def delete(request, id):
 
 def detail(request, id):
     post = Post.objects.get(id = id)
-    return render(request, 'detail.html', {'post':post})
+    comments = Comment.objects.filter(post = id).order_by('pub_date')
+    return render(request, 'detail.html', {'post':post, 'comments':comments})
 
 # comment view
 def comment_create(request, post_id):
     post = get_object_or_404(Post, pk = post_id)
-    writer = request.POST.get('writer')
+    writer_id = request.POST.get('writer_id')
+    writer = get_object_or_404(CustomUser, pk = writer_id)
     content = request.POST.get('content')
     
     comment = Comment.objects.create(post = post, user = writer, content = content)
     comment.save()
     response = {
         'comment_id': comment.id,
-        'writer': comment.writer,
-        'content': comment.content,
+        'writer_name': writer.name,
+        'writer_major': writer.major,
+        'content': content,
         'pub_date': comment.pub_date
     }
 
