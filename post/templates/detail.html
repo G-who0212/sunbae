@@ -12,6 +12,45 @@
             <h2><a href="{%url 'edit' post.id%}">수정하기</a></h2>
             <h2><a href="{%url 'delete' post.id%}">삭제하기</a></h2>    
             <h2><a href="{%url 'home'%}">홈화면</a></h2>
+
+            <!-- Start comment test html -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-md-12">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <textarea class="form-control" id="comment-content" rows="3" placeholder="댓글을 입력해주세요."></textarea>
+                        </div>
+                        <div class="text-right" style="float:right">
+                            <button id="comment-write" class="btn btn-sm">댓글달기</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id="comment-container">
+                        {% if comments %}
+                            {% for comment in comments %}
+                            <div id='{{ comment.id }}'>
+                                <strong>{{ comment.writer }}</strong>
+                                <span style="float:right">{{ comment.pub_date }}</span>
+                                <div>
+                                    <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
+                                    <div style="text-align: right;">
+                                    {% if comment.writer == request.user %}
+                                        <a onclick="commentModify('{{comment.id}}');">수정</a>
+                                        <a onclick="commentDelete('{{comment.id}}');">삭제</a>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                        <input type="hidden" id="comment_writer" value={{request.user}}>
+                        <div id="comment_list"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- End comment test html -->
     </div>    
 
 {% endblock %}
