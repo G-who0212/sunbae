@@ -1,6 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
-from .models import Post
+from django.http import HttpResponse
+import json
+from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
+from .models import Post, Comment
 from .forms import PostForm
 
 # Create your views here.
@@ -50,3 +54,30 @@ def delete(request, id):
 def detail(request, id):
     post = Post.objects.get(id = id)
     return render(request, 'detail.html', {'post':post})
+
+# comment view
+def comment_create(request, post_id):
+    post = get_object_or_404(Post, pk = post_id)
+    writer = request.POST.get('writer')
+    content = request.POST.get('content')
+    
+    comment = Comment.objects.create(post = post, user = writer, content = content)
+    comment.save()
+    response = {
+        'comment_id': comment.id,
+        'writer': comment.writer,
+        'content': comment.content,
+        'pub_date': comment.pub_date
+    }
+
+    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type = "application/json")
+
+def comment_delete(request, post_id):
+    post = get_object_or_404(Post, pk = post_id)
+    comment_id = request.POST.get('comment_id')
+    delete_comment = Comment.objects.get(pk = comment_id)
+    delete_comment.delete()
+    response = {
+        'message': '성공적으로 삭제되었습니다.'
+    }
+    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type = "application/json")
