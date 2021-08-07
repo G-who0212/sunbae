@@ -77,7 +77,6 @@ def comment_create(request, post_id):
     return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type = "application/json")
 
 def comment_delete(request, post_id):
-    post = get_object_or_404(Post, pk = post_id)
     comment_id = request.POST.get('comment_id')
     delete_comment = Comment.objects.get(pk = comment_id)
     delete_comment.delete()

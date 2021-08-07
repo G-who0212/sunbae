@@ -37,8 +37,8 @@
                                         <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
                                         <div style="text-align: right;">
                                         {% if comment.user == user %}
-                                            <a onclick="updateComment('{{comment.id}}');">수정</a>
-                                            <a onclick="deleteComment('{{comment.id}}');">삭제</a>
+                                            <button onclick="updateComment('{{comment.id}}');">수정</button>
+                                            <button onclick="deleteComment('{{comment.id}}');">삭제</button>
                                         {% endif %}
                                         </div>
                                     </div>
@@ -101,6 +101,25 @@
                         </div>
                         <hr>
                     </div>`
+        }
+
+        function deleteComment(comment_id) {
+            let delete_warning = confirm('댓글을 삭제하시겠습니까?');
+            if (delete_warning == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'comment_delete' post.id %}",
+                    dataType: "json",
+                    data: {
+                        'comment_id': comment_id,
+                        'csrfmiddlewaretoken': `{{csrf_token}}`,
+                    },
+                    success: function (response) {
+                        alert('성공적으로 삭제되었습니다.');
+                        window.location.reload();
+                    }
+                })
+            }
         }
     </script>
     <!-- End comment javascript -->
