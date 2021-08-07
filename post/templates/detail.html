@@ -32,12 +32,11 @@
                                 {% for comment in comments %}
                                 <div id='{{ comment.id }}'>
                                     <strong>{{ comment.user.name }}</strong>{{ comment.user.major }}
-                                    <span style="float:right">{{ comment.pub_date }}</span>
+                                    <span style="float:right">{{ comment.pub_date|date:'Y-m-d H:i' }}</span>
                                     <div>
                                         <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
                                         <div style="text-align: right;">
                                         {% if comment.user == user %}
-                                            <button onclick="updateComment('{{comment.id}}');">수정</button>
                                             <button onclick="deleteComment('{{comment.id}}');">삭제</button>
                                         {% endif %}
                                         </div>
@@ -91,12 +90,11 @@
         function addComment(response) {
             return `<div id=${response.comment_id}>
                         <strong>${response.writer_name}</strong>${response.writer_major}
-                        <span style="float:right">${response.pub_date}</span>
+                        <span style="float:right">${response.pub_date.substring(0, 10) + ' ' + response.pub_date.substring(11,16)}</span>
                         <div>
                             <div style="white-space:pre-wrap; text-align:left;">${response.content}</div>
                             <div style="text-align: right;">
-                            <a onclick="deleteComment('${response.comment_id}');">수정</a>
-                            <a onclick="updateComment('${response.comment_id}');">삭제</a>
+                            <button onclick="deleteComment('${response.comment_id}');">삭제</button>
                             </div>
                         </div>
                         <hr>
