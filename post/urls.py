@@ -2,7 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('<str:id>',detail,name="detail"), 
+    path('<int:id>',detail,name="detail"), 
     path('new/', new, name="new"),
     path('create/', create, name="create"),
     path('edit/<str:id>', edit, name="edit"),
@@ -11,4 +11,5 @@ urlpatterns = [
     path('detail/<str:id>', detail, name="detail"),
     path('detail/<str:post_id>/comment/create', comment_create, name="comment_create"),
     path('detail/<str:post_id>/comment/delete', comment_delete, name="comment_delete"),
+    path('like/', likes, name="likes"),
 ]
