@@ -2,11 +2,12 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+<div class = "container">
     <h1>
         {% if user.image %}
         <img src="{{user.image.url}}" alt="사진"> 
         {% endif %}
-        {{user.name}}</h1>
+        {{user.name}}</h1> 
     <div>
         과목 : {{user.major}}
         <br>
@@ -47,4 +48,5 @@
     </div>
 {% endif %}
 <a href="{%url 'home'%}">홈화면</a>
+</div>
 {% endblock %}
