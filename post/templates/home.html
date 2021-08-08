@@ -2,14 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="{%url 'login'%}">로그인</a></li>
-        <li role="presentation"><a href="{%url 'logout'%}">로그아웃</a></li>
-        <li role="presentation"><a href="{%url 'register'%}">회원가입</a></li>
-        <li role="presentation"><a href="{%url 'mypage'%}">마이페이지</a></li>
-        <li role="presentation"><a href="{%url 'new'%}">글쓰기</a></li>
-
-      </ul>
+  
 <!-- <h2><a href="{%url 'login'%}">로그인</a></h2>
 <h2><a href="{%url 'logout'%}">로그아웃</a></h2>
 <h2><a href="{%url 'register'%}">회원가입</a></h2>
@@ -17,7 +10,7 @@
 <h2><a href="{%url 'new'%}">글쓰기</a></h2> -->
 
     
-    {% for post in posts %}
+    <!-- {% for post in posts %}
         <div>
             <h3>{{post.writer}}{{post.major}}</h3>
             {{post.body}} <br>
@@ -26,7 +19,7 @@
             {{post.link}} <br>
             <a href="{%url 'detail' post.id%}">...more</a>
             <br>
-        </div>
+        </div> -->
     {%endfor%} 
 </div>    
 {% endblock %}
