@@ -126,6 +126,8 @@ myvenv/
 ENV/
 env.bak/
 venv.bak/
+account/migrations/
+post/migrations/
 
 # Spyder project settings
 .spyderproject
