@@ -1,9 +1,12 @@
+from account.models import CustomUser
 from django.shortcuts import get_object_or_404, render, redirect
 
+
 # Create your views here.
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm#, UserCreationForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout,get_user_model
 from .forms import RegisterForm
 
 # Create your views here.
@@ -48,3 +51,23 @@ def register_view(request):
 
 def mypage(request):
     return render(request,'myprofile.html')
+
+def follow(request,pk):
+    CustomUser = get_user_model()
+    user = get_object_or_404(CustomUser,pk=pk)
+    if user != request.user:
+        if user.followers.filter(pk=request.user.pk).exists():
+            user.followers.remove(request.user)
+        else:
+            user.followers.add(request.user)
+    return redirect('myprofile',user.pk)
+
+
+def seefollow(request,pk):
+    CustomUser = get_user_model()
+    user = get_object_or_404(CustomUser,pk=pk)
+    followings=user.followings.all()
+    followers=user.followers.all()
+    return render (request,'follow.html',{'followings':followings},{'followers':followers})
+
+
