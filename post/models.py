@@ -1,4 +1,5 @@
 from django.db import models
+from account.models import CustomUser
 
 # Create your models here.
 class Post(models.Model):
@@ -34,6 +35,8 @@ class Post(models.Model):
     hashtag = models.CharField(max_length=50) #해쉬태그
     image = models.ImageField(upload_to = "blog/", blank=True, null=True)# 이미지
     link = models.CharField(max_length=100, blank=True, null=True)#링크
+    
+    like = models.ManyToManyField(CustomUser, related_name='likes',blank=True)
 
     writer = models.CharField(max_length=50)
     major = models.CharField(max_length=30)
