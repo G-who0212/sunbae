@@ -48,6 +48,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
-    posts = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
-    contents = models.TextField(blank=True)
-    pub_date = models.DateTimeField()
+    post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
+    content = models.TextField(blank=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content
