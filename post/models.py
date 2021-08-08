@@ -39,7 +39,6 @@ class Post(models.Model):
     # major = models.CharField(max_length=30)
     # career1Title = models.CharField(max_length=50)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
-
     likes = models.ManyToManyField(CustomUser, related_name='post_likes') # 좋아요
 
     def summary(self):

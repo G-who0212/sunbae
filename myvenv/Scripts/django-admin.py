@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!c:\users\김유진\onedrive\문서\github\sunbae\myvenv\scripts\python.exe
+=======
+#!c:\users\user\onedrive\바탕 화면\sunbaeproject\myvenv\scripts\python.exe
+>>>>>>> page1,2
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 

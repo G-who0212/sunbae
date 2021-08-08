@@ -9,10 +9,14 @@
 <h2><a href="{%url 'mypage'%}">마이페이지</a></h2>
 <h2><a href="{%url 'new'%}">글쓰기</a></h2> -->
 
-    
-    <!-- {% for post in posts %}
+{% if user.is_authenticated %}
+authenticated
+{%endif%}
+
+    <div class="container">
+    {% for post in posts %}
         <div>
-            <h3>{{post.writer}}{{post.major}}</h3>
+            <h3><a href="{% url 'otherpage' post.user.id %}">{{post.user}}{{post.user.major}}</a></h3>
             {{post.body}} <br>
             {{post.category}} <br>
             {{post.hashtag}} <br>
