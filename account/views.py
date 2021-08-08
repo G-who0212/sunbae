@@ -4,7 +4,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm#, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegisterForm
+from .forms import CareerForm, RegisterForm, UnivForm
+from post.forms import PostForm
+from post.models import Post
+from account.models import CustomUser, Career, Univ
 
 # Create your views here.
 def home(request):
@@ -12,7 +15,7 @@ def home(request):
 
 
 def login_view(request):
-    if request.method == 'POST': #Blog앱에서 두개의 메소드로 나누었던 것을 하나의 메소드로 합침(DB의 내용에 접근할때 request.method의 방식이 달라지는 것을 활용함)
+    if request.method == 'POST': 
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
@@ -20,7 +23,8 @@ def login_view(request):
             user = authenticate(request=request, username=username, password=password)
             if user is not None:
                 login(request, user)
-
+        else:
+             return render(request, 'wrongIDorPW.html')
         return redirect("home")
     else:
         form = AuthenticationForm()
@@ -37,14 +41,58 @@ def register_view(request):
         form = RegisterForm(request.POST)
         # form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-        return redirect("home")
+            user = form.save() 
+            login(request, user) 
+        return redirect("registerCareer")
     else:
         form = RegisterForm()
         # form = UserCreationForm()
         return render(request, 'signup.html', {'form':form})
 
+def register_view_career(request):
+    if request.method == "POST":
+        form = CareerForm(request.POST)
+        if form.is_valid():
+            career = form.save(commit=False)
+            if request.user.is_authenticated:
+                career.user = request.user #잘못된 이유를 모르겠음
+                career = form.save()
+        return redirect("registerUniv")
+    else:
+        form = CareerForm()
+        return render(request, 'signupCareer.html', {'form':form})
+
+
+def register_view_univ(request):
+    if request.method == "POST":
+        form = UnivForm(request.POST)
+        if form.is_valid():
+            univ = form.save(commit=False)
+            if request.user.is_authenticated:
+                univ.user = request.user 
+                univ = form.save()
+        return redirect("home")
+    else:
+        form = UnivForm()
+        return render(request, 'signupUniv.html', {'form':form})        
+
 
 def mypage(request):
-    return render(request,'myprofile.html')
+    if request.user.is_authenticated:
+        posts = Post.objects.filter(user=request.user).order_by('-pub_date')
+        careers = Career.objects.filter(user=request.user)
+        univs = Univ.objects.filter(user=request.user)
+        return render(request,'myprofile.html', {'posts':posts, 'careers':careers, 'univs':univs})
+    else:
+        return render(request, 'ifNotAuthenticated.html')
+
+
+def otherpage(request, id):
+    post = get_object_or_404(Post, pk=id)
+    author = post.user
+    aID = post.user.id
+    customuser = get_object_or_404(CustomUser, pk=aID)
+    posts = Post.objects.filter(user=author).order_by('-pub_date')
+    careers = Career.objects.filter(user=author)
+    univs = Univ.objects.filter(user=author)
+    return render(request, 'otherprofile.html', {'customuser':customuser, 'posts':posts, 'careers':careers, 'univs':univs})

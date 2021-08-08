@@ -2,15 +2,13 @@
 
 {% block content %}
 <a href="{%url 'home'%}">홈화면</a>
-{% if user.is_authenticated %}
     <h1>
-        {% if user.image %}
-        <img src="{{user.image.url}}" alt="사진"> 
+        {% if customuser.image %}
+        <img src="{{customuser.image.url}}" alt="사진"> 
         {% endif %}
-        {{user.name}}({{user.major}}{{user.studentNum}})</h1>
+        {{customuser.name}}({{customuser.major}}{{customuser.studentNum}})</h1>
         <br>
-        팔로우 : {{user.followers}} 팔로잉 : {{user.following}}
-        {% endif %}
+        팔로우 : {{customuser.followers}} 팔로잉 : {{customuser.following}}
         <br>
         <br>
         경력
@@ -33,6 +31,8 @@
         <br>
         {% for post in posts %}
             <div>
+                {{post.user}}{{post.major}}
+                <br>
                 {{post.body}}
                 <br>
                 {{post.category}}

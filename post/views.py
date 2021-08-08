@@ -21,11 +21,11 @@ def create(request):
     if form.is_valid():
         new_post = form.save(commit=False)
         new_post.pub_date = timezone.now()
-        new_post.writer = request.POST['name']
-        new_post.major = request.POST['major']
-        new_post.career1Title = request.POST['career']
-        new_post.save()
-        return redirect('detail', new_post.id)
+        if request.user.is_authenticated:
+            new_post.user = request.user
+            new_post.aID = request.user.id
+            new_post.save()
+            return redirect('detail', new_post.id)
     return redirect('home')
 
 def edit(request, id):

@@ -97,7 +97,7 @@ class CustomUser(AbstractUser):
     following = models.ManyToManyField("self")
 
 
-class Career():
+class Career(models.Model):
 	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 	company = models.CharField(max_length=50, blank=True, null=True) #회사
 	title = models.CharField(max_length=50, blank=True, null=True) #직함
@@ -179,9 +179,9 @@ class Career():
 
 
 
-class Univ:
+class Univ(models.Model):
 	#대학생 활동
-	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True) 
 	universityActivity = models.CharField(max_length=50, blank=True, null=True) #활동명
 	universityTitle = models.CharField(max_length=50, blank=True, null=True) #직함
 	UNIVERSITY_YEAR_START_CHOICES = [ #시작년도 선택지
