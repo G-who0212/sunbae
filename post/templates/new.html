@@ -1,14 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Write your Post</h1>
-<form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-    {{post.as_p}}
-    <input type="text" name = "name" value={{user.name}}>
-    <input type="text" name = "major" value={{user.major}}>
-    <input type="text" name = "career" value={{user.career1Title}}>
-    <button type="submit"> submit </button>
-    <!-- <a href="create/?name={{user.name}}&major={{user.major}}&career={{user.career1Title}}"> <button type="submit"> submit </button> </a> -->
-</form>
-{% endblock %}
+<style>
+    .button {background-color : #5B9BD5; 
+             color: white; 
+             font-size: 5px;
+             border-radius: 5px;
+             padding: 5px 7.5px; 
+             margin: 5px 7.5px;
+             text-align : center;
+             border-style : none;
+             }
+    h1 {font-size:20px; 
+    font-weight:700; 
+    padding: 5px 7.6px;
+    margin: 5px 7.5px;
+    text-align : center;}
+</style>
+
+<div class = "container">
+    <h1>게시물 업로드</h1>
+    <br>
+    <br>
+    <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{post.as_p}}
+        <!-- <p><input type="text" name = "name" value={{user.name}}>
+        <input type="text" name = "major" value={{user.major}}>
+        <input type="text" name = "career" value={{user.career1Title}}></p>
+        <br> -->
+        <button type="submit" class="button"> 업로드하기 </button>
+        <!-- <a href="create/?name={{user.name}}&major={{user.major}}&career={{user.career1Title}}"> <button type="submit"> submit </button> </a> -->
+    </form>
+</div>
+{% endblock %} 

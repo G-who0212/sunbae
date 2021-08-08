@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Login</h1>
+<div class = "container" style="text-align : center;">
+<h2>학교 동문에게 커리어를 묻다</h2>
+<h1><strong>선배님</strong></h1>
 
 <form action="{% url 'login' %}" method="post">
     {%csrf_token%}
     {{form.as_p}}
-    <button type="submit"> submit </button> 
+    <button type="submit" class="btn btn-primary"> 로그인 </button> 
 </form>
+</div>
 {% endblock %}
