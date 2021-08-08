@@ -7,6 +7,7 @@
         <img src="{{user.image.url}}" alt="사진"> 
         {% endif %}
         {{user.name}}</h1>
+       
     <div>
         과목 : {{user.major}}
         <br>
@@ -45,6 +46,32 @@
         <br>
         URL : {{user.websiteURL}}
     </div>
+
+
+    <div>
+        <a href = "{% url 'seefollow' user.pk %}">팔로우/팔로워 보기</a>
+        <div>
+            <p> 팔로워 {{ user.followers.all|length }}명</p>
+            <p> 팔로잉 {{ user.followings.count }}명</p>           
+        </div>
+
+        
+        <hr>
+        {% if request.user != user %}
+
+        {% with user_followers=user.followers.all %}
+            {%if request.user in user_followers %}
+                <a href ="{% url 'follow' user.pk %}">팔로잉</a>
+            {%else%}
+                <a href="{% url 'follow' user.pk %}">팔로우</a>
+            {%endif%}
+        
+         {%endwith%}
+         {%endif%}
+        
+
+    </div>
+
 {% endif %}
 <a href="{%url 'home'%}">홈화면</a>
 {% endblock %}
