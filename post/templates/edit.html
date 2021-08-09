@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Edit your Post</h1>
+<div class="container" style="text-align : center;">
+<h1>게시물 수정</h1>
 {% endif %}
 <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
     {%csrf_token%}
@@ -9,7 +10,8 @@
     <input type="text" name = "name" value={{user.name}}>
     <input type="text" name = "major" value={{user.major}}>
     <input type="text" name = "career" value={{user.career1Title}}>
-    <button type="submit"> submit </button>
+    <button type="submit" class="btn btn-primary"> submit </button>
     <!-- <a href="create/?name={{user.name}}&major={{user.major}}&career={{user.career1Title}}"> <button type="submit"> submit </button> </a> -->
 </form>
-{% endblock %}
+</div>
+{% endblock %} 

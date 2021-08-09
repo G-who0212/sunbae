@@ -1,13 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <head>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    </head>
     <div class="container">
-            <h3>{{post.writer}}{{post.major}}</h3>
+            <h3>{{post.user}}{{post.user.major}}</h3>
             {{post.body}} <br>
             {{post.category}} <br>
             {{post.hashtag}} <br>
             {{post.link}}
-             <!-- path-converter를 활용하기 위해 detail함수로 넘길때 blog.id까지 같이 넘김 -->
+
+             <!--중략-->
+            <button id="{{post.id}}" onclick="post_like(this.id)">
+                    {%if request.user in post.like.all%}
+                    <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+                    <i id="heart" class="fas fa-heart"></i>
+                    {%else%}
+                    <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+                    <i id="heart" class="far fa-heart"></i>
+                    {%endif%}
+                    <span id="like_count">{{post.like.count}}</span>
+            </button>
+            
+             <!-- path-converter를 활용하기 위해 detail함수로 넘길때 post.id까지 같이 넘김 -->
             <br>
             <h2><a href="{%url 'edit' post.id%}">수정하기</a></h2>
             <h2><a href="{%url 'delete' post.id%}">삭제하기</a></h2>    
@@ -121,4 +137,33 @@
         }
     </script>
     <!-- End comment javascript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function post_like(id) {
+            console.log("hi")
+            $.ajax({
+                url: "{%url 'likes'%}", // data를 전송할 url 입니다.
+                data: {
+                    'post_id': id
+                }, // post_id 라는 name으로 id 값 전송
+                dataType: "json",
+                success: function (response) { // ajax 통신이 정상적으로 완료되었을 때
+                    $('#like_count').html(response.like_count) //id가 like_count의 내용을 전송받은 좋아요 수로 바꾼다
+                    $('#message').html(response.message) //id가 message의 내용을 전송받은 message로 바꾼다
+                    $('.toast').fadeIn(400).delay(100).fadeOut(400)
+                    if (response.message == "좋아요")
+                    //좋아요 눌렀을 때 
+                    {
+                        $('#heart').attr("class", "fas fa-heart")
+                    } else if (response.message == "좋아요 취소")
+                    //좋아요 상태에서 다시 눌렀을 때 
+                    {
+                        $('#heart').attr("class", "far fa-heart")
+                    }
+                }
+            })
+        }
+    </script>
+
 {% endblock %}

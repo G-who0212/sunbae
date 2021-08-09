@@ -33,14 +33,10 @@ class Post(models.Model):
     pub_date = models.DateTimeField()#올린 날짜
     body = models.TextField()# 내용
     hashtag = models.CharField(max_length=50) #해쉬태그
-    image = models.ImageField(upload_to = "post/", blank=True, null=True)# 이미지
-   
-    # writer = models.CharField(max_length=50)
-    # major = models.CharField(max_length=30)
-    # career1Title = models.CharField(max_length=50)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
-
-    likes = models.ManyToManyField(CustomUser, related_name='post_likes') # 좋아요
+    image = models.ImageField(upload_to = "blog/", blank=True, null=True)# 이미지
+    link = models.CharField(max_length=100, blank=True, null=True)#링크
+    
+    like = models.ManyToManyField(CustomUser, related_name='likes',blank=True)
 
     def summary(self):
         return self.body[:100]
