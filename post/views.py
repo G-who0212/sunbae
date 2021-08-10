@@ -63,8 +63,10 @@ def comment_create(request, post_id):
     comment.save()
     response = {
         'comment_id': comment.id,
+        'writer_profile_image': writer.profile_image.url,
         'writer_name': writer.name,
         'writer_major': writer.major,
+        'writer_studentNum': writer.studentNum,
         'content': content,
         'pub_date': comment.pub_date
     }
