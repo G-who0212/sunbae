@@ -64,7 +64,7 @@ def register_view_career(request):
             if request.user.is_authenticated:
                 career.user = request.user 
                 career = form.save()
-        return redirect("registerUniv")
+        return redirect("registerCareer")
     else:
         form = CareerForm()
         return render(request, 'signupCareer.html', {'form':form})
@@ -78,7 +78,7 @@ def register_view_univ(request):
             if request.user.is_authenticated:
                 univ.user = request.user 
                 univ = form.save()
-        return redirect("home")
+        return redirect("registerUniv")
     else:
         form = UnivForm()
         return render(request, 'signupUniv.html', {'form':form})        
