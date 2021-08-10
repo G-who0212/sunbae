@@ -5,7 +5,6 @@
 
 {%for career in careers%}
 <p><a href="{%url 'careerEdit' career.id%}">{{career.company}}  {{career.title}}</a></p>
-{{career.careerRoleAchievement}}
 <br>
 <br>
 {%endfor%}
