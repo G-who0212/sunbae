@@ -1,44 +1,136 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<a href="{%url 'home'%}">홈화면</a>
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+</head>
+
+<style>
+    html, body {
+        margin: 0;
+        height: 100%;
+    }
+
+    .custom-border {
+        border: #5B9BD5 1px solid;
+    }
+
+    .profile-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+</style>
+
 {% if user.is_authenticated %}
-<div class = "container">
-    <h1>
-        {% if user.image %}
-        <img src="{{user.image.url}}" alt="사진"> 
-        {% endif %}
-        {{user.name}}({{user.major}}{{user.studentNum}})</h1>
-        <br>
-        팔로우 : {{user.followers}} 팔로잉 : {{user.following}}
-        {% endif %}
-        <br>
-        <br>
-        경력
-        {% for career in careers %}
-        <br>
-        {{career.company}}
-        <br>
-        {{career.title}}
-        {%endfor%}
-        <br>
-        <br>
-        대학생 활동 경력
-        {% for univ in univs %}
-        <br>
-        {{univ.universityActivity}}
-        <br>
-        {{univ.universityTitle}}
-        {%endfor%}
-        <br>
-        <br>
-        {% for post in posts %}
-            <div>
-                {{post.body}}
-                <br>
-                {{post.category}}
-                <br>
-                {{post.hashtag}}
+<div class="container h-100">
+    <div class="row mb-3 p-3 custom-border">
+        <img class="p-0 mb-2 profile-image" src="{{user.profile_image.url}}" alt="프로필 사진"><br>
+        <div class="p-0 fs-3 mb-2">{{user.name}}({{user.major}}{{user.studentNum}})</div>
+        <!-- followings, followers 수정 -->
+        <div class="p-0">팔로우 21명 팔로워 10명</div>
+    </div>
+    <div class="row h-50">
+        <div class="col-4 me-2 mh-100 overflow-auto custom-border">
+            <div class="mt-2 p-1 custom-border">
+                <!-- careers 수정 -->
+                <span class="fw-bold">경력</span>
+                <ul class="mt-2">
+                    <li>Toss 브랜드 마케터</li>
+                    <li>제일기획 광고기획자</li>
+                    <li>트레바리 브랜드 마케터</li>
+                </ul>
             </div>
-        {%endfor%}
+            <div class="mt-2 mb-2 p-1 custom-border">
+                <!-- universityActivity 수정 -->
+                <span class="fw-bold">대학생 활동 경력</span>
+                <ul class="mt-2">
+                    <li>멋쟁이사자처럼 9기</li>
+                    <li>코알라유니브 2기</li>
+                    <li>상상마케팅스쿨 13기</li>
+                    <li>OO광고공모전 장려상</li>
+                    <li>OO회사 마케터 인턴</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col ms-2 mh-100 overflow-auto custom-border">
+            <div class="card my-2 custom-border">
+                <div class="card-body">
+                    <div class="mb-1 d-flex justify-content-end">
+                        <button class="me-2 btn btn-secondary btn-sm">수정</button>
+                        <button class="btn btn-danger btn-sm">삭제</button>
+                    </div>
+                    <p class="card-text">안녕하세요 여러분 카카오 가고싶으시죠? 오늘은 카카오 가는 개꿀팁을 알려드리겠습... <a href="#">더보기</a></p>
+                    <p class="category">개발</p>
+                    <p class="hashtag">#개발 #카카오 #취업</p>
+                    <p class="like">
+                        좋아요 13명
+                        <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
+                            {%if request.user in post.like.all%}
+                            <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+                            <i id="heart" class="fas fa-heart"></i>
+                            {%else%}
+                            <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+                            <i id="heart" class="far fa-heart"></i>
+                            {%endif%}
+                            <span id="like_count">{{post.like.count}}</span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <div class="card my-2 custom-border">
+                <div class="card-body">
+                    <div class="mb-1 d-flex justify-content-end">
+                        <button class="me-2 btn btn-secondary btn-sm">수정</button>
+                        <button class="btn btn-danger btn-sm">삭제</button>
+                    </div>
+                    <p class="card-text">안녕하세요 여러분 카카오 가고싶으시죠? 오늘은 카카오 가는 개꿀팁을 알려드리겠습... <a href="#">더보기</a></p>
+                    <p class="category">개발</p>
+                    <p class="hashtag">#개발 #카카오 #취업</p>
+                    <p class="like">
+                        좋아요 13명
+                        <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
+                            {%if request.user in post.like.all%}
+                            <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+                            <i id="heart" class="fas fa-heart"></i>
+                            {%else%}
+                            <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+                            <i id="heart" class="far fa-heart"></i>
+                            {%endif%}
+                            <span id="like_count">{{post.like.count}}</span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <div class="card my-2 custom-border">
+                <div class="card-body">
+                    <div class="mb-1 d-flex justify-content-end">
+                        <button class="me-2 btn btn-secondary btn-sm">수정</button>
+                        <button class="btn btn-danger btn-sm">삭제</button>
+                    </div>
+                    <p class="card-text">안녕하세요 여러분 카카오 가고싶으시죠? 오늘은 카카오 가는 개꿀팁을 알려드리겠습... <a href="#">더보기</a></p>
+                    <p class="category">개발</p>
+                    <p class="hashtag">#개발 #카카오 #취업</p>
+                    <p class="like">
+                        좋아요 13명
+                        <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
+                            {%if request.user in post.like.all%}
+                            <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+                            <i id="heart" class="fas fa-heart"></i>
+                            {%else%}
+                            <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+                            <i id="heart" class="far fa-heart"></i>
+                            {%endif%}
+                            <span id="like_count">{{post.like.count}}</span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<a href="{%url 'login'%}">로그인해주세요</a>
+{% endif %}
+
 {% endblock %}
