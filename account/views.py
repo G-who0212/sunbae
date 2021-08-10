@@ -95,15 +95,24 @@ def follow(request,pk):
             user.followers.remove(request.user)
         else:
             user.followers.add(request.user)
-    return redirect('myprofile',user.pk)
+    return redirect('otherpage',user.pk)
 
-
-def seefollow(request,pk):
-    CustomUser = get_user_model()
+def see_follower(request,pk):
+    CustomUser= get_user_model()
     user = get_object_or_404(CustomUser,pk=pk)
-    followings=user.followings.all()
-    followers=user.followers.all()
-    return render (request,'follow.html',{'followings':followings},{'followers':followers})
+    if user != request.user:
+        return render(request,'myfollower.html',{'user' :user})
+    else:
+        return render(request,'myfollower.html',{'user':request.user})
+
+def see_following(request,pk):
+    CustomUser= get_user_model()
+    user = get_object_or_404(CustomUser,pk=pk)
+    if user != request.user:
+        return render(request,'myfollowing.html',{'user' :user})
+    else:
+        return render(request,'myfollowing.html',{'user':request.user})
+
 
 
 def mypage(request):

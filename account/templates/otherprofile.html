@@ -8,7 +8,17 @@
         {% endif %}
         {{customuser.name}}({{customuser.major}}{{customuser.studentNum}})</h1>
         <br>
-        팔로우 : {{customuser.followers}} 팔로잉 : {{customuser.following}}
+        <a href= "{%url 'see_follower' customuser.pk%}">팔로워</a>: {{ customuser.followers.all|length }}명  <a href= "{%url 'see_following' customuser.pk%}"> 팔로잉</a>  : {{ customuser.followings.count }}명
+        <br>
+        {% if request.user != customuser %}
+        {% with user_followers=customuser.followers.all %}
+            {%if request.user in user_followers %}
+                <a href="{% url 'follow' customuser.pk %}">팔로잉</a>
+            {%else%}
+                <a href = "{%url 'follow' customuser.pk%}">팔로우</a>
+            {%endif%}
+        {%endwith%}
+        {%endif%}
         <br>
         <br>
         경력
