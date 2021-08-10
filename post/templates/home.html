@@ -10,12 +10,12 @@ authenticated
     <div class="container">
     {% for post in posts %}
         <div>
-            <h3><a href="{% url 'otherpage' post.user.id %}">{{post.user}}{{post.user.major}}</a></h3>
+            <h3><a href="{% url 'profile' post.author.id %}">{{post.author}}{{post.author.major}}</a></h3>
             {{post.body}} <br>
             {{post.category}} <br>
             {{post.hashtag}} <br>
             {{post.link}} <br>
-            <a href="{%url 'detail' post.id%}">...more</a>
+            <a href="{%url 'detail' post.id%}">...더보기</a>
             <br>
         </div> -->
     {%endfor%} 

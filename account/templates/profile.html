@@ -22,11 +22,20 @@
     }
 </style>
 
-{% if user.is_authenticated %}
+{% if request.user.is_authenticated %}
 <div class="container h-100">
     <div class="row mb-3 p-3 custom-border">
         <img class="p-0 mb-2 profile-image" src="{{user.profile_image.url}}" alt="프로필 사진"><br>
-        <div class="p-0 fs-3 mb-2">{{user.name}}({{user.major}}{{user.studentNum}})</div>
+        <div class="p-0 fs-3 mb-2">
+            {{user.name}}({{user.major}}{{user.studentNum}})
+            {% if request.user == user %}
+            <!-- 프로필 수정 추가 -->
+            <a class="link-secondary" href="#"><i class="fas fa-user-edit"></i></a>
+            {% endif %}
+        </div>
+        {% if request.user != user %}
+        <a href="{% url 'follow' user.id %}"><button class="me-2 btn btn-secondary btn-sm">팔로우</button></a>
+        {% endif %}
         <div class="p-0">팔로우 {{follower_list | length}}명</div>
         <div class="p-0">팔로잉 {{following_list | length}}명</div>
     </div>
@@ -58,16 +67,18 @@
             {% for post in post_list %}
             <div class="card my-2 custom-border">
                 <div class="card-body">
+                    {% if request.user == user %}
                     <div class="mb-1 d-flex justify-content-end">
                         <a href="{% url 'update' post.id %}"><button class="me-2 btn btn-secondary btn-sm">수정</button></a>
                         <a href="{% url 'delete' post.id %}"><button class="btn btn-danger btn-sm">삭제</button></a>
                     </div>
+                    {% endif %}
                     <p class="card-text">{{post.body | slice:":100"}}...<a href="{% url 'detail' post.id %}">더보기</a></p>
                     <p class="category">{{post.category}}</p>
                     <p class="hashtag">{{post.hashtag}}</p>
                     <p class="like">
                         좋아요 {{post.like.all | length}}명
-                        <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(post.id)">
+                        <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
                             {%if request.user in post.like.all%}
                             <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
                             <i id="heart" class="fas fa-heart"></i>
@@ -83,8 +94,31 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function post_like(id) {
+        console.log("hi")
+        $.ajax({
+            url: "{%url 'likes'%}",
+            data: {
+                'post_id': id
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#like_count').html(response.like_count)
+                $('#message').html(response.message)
+                if (response.message == "좋아요")
+                {
+                    $('#heart').attr("class", "fas fa-heart")
+                } else if (response.message == "좋아요 취소")
+                {
+                    $('#heart').attr("class", "far fa-heart")
+                }
+            }
+        })
+    }
+</script>
 {% else %}
 <a href="{%url 'login'%}">로그인해주세요</a>
 {% endif %}
-
 {% endblock %}

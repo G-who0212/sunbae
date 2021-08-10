@@ -117,14 +117,3 @@ def seefollow(request,pk):
         return render(request,'myprofile.html', {'posts':posts, 'careers':careers, 'univs':univs})
     else:
         return render(request, 'ifNotAuthenticated.html')
-
-
-def otherpage(request, id):
-    post = get_object_or_404(Post, pk=id)
-    author = post.user
-    aID = post.user.id
-    customuser = get_object_or_404(CustomUser, pk=aID)
-    posts = Post.objects.filter(user=author).order_by('-pub_date')
-    careers = Career.objects.filter(user=author)
-    univs = Univ.objects.filter(user=author)
-    return render(request, 'otherprofile.html', {'customuser':customuser, 'posts':posts, 'careers':careers, 'univs':univs})
