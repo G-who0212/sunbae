@@ -99,39 +99,35 @@
   </style>
 </head>
 <body>
-  <div class="container" >
+<div class="container" >
   <nav class="navbar-default" id="nav1">
     <div class="container-fluid" >
       <div class="navbar-header" >
         <a class="navbar-brand"  href="{%url 'home'%}" >
-          <img alt="Brand" id="logo" src="C:\Users\LG\Desktop\sunbae\images\sunbaenim.PNG" ></a>
+          <img alt="Brand" id="logo" src="images\sunbaenim.PNG" ></a>
         
-      
+        {% if request.user.is_authenticated %}
         <form class="navbar-form navbar-left" role="search" >
           <div class="form-group">
             <input class="form-control me-2" type="search" placeholder="키워드를 입력하세요" aria-label="Search" 
             style="width:150px; height:30px">
-            <!-- line-height: 10%; height:10%; padding: 5px 7.5px; margin: 5px 7.5px;"> -->
-          
-          <button type="submit" id ="searchbutton"> 검색 </button>
+            <button id="searchbutton" type="submit"> 검색 </button>
+            
+            <div id = "menubar">
+              <ul class="nav nav-right">
+                <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
+                <li><a class="navbar-brand" href="{%url 'profile' request.user.id %}">마이페이지</a></li>
+                <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
+              </ul>
+            </div>
           </div>
         </form>
-        <div id = "menubar">
-        <ul class="nav navbar-right">
-          <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
-          <li><a class="navbar-brand" href="{%url 'mypage'%}">마이페이지</a></li>
-          <li><a class="navbar-brand" href="{%url 'register'%}">회원가입</a></li>
-          <li><a class="navbar-brand" href="{%url 'login'%}">로그인</a></li>
-          <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
-
-        </ul>
-        </div>
-        
-        </div>
-        </div>
-        </nav>
-        </div>
-   {% block content %}
-   {% endblock %}
+      </div>
+    </div>
+  </nav>
+</div>
+{% endif %}
+{% block content %}
+{% endblock %}
 </body>
 </html>

@@ -7,15 +7,32 @@ from django.core.serializers.json import DjangoJSONEncoder
 from .models import Post, Comment
 from .forms import PostForm
 from account.models import CustomUser
+from operator import itemgetter
 
 # Create your views here.
 def home(request):
-    posts = Post.objects.order_by('-pub_date')
-    return render(request, 'home.html', {'posts':posts})
-
-def detail(request, id):
-    post = get_object_or_404(Post, pk = id)
-    return render(request, 'new.html', {'post':post})
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # 자신이 팔로우 한 사람들의 최신글 + 최신글을 20개까지 가져오기
+    following_list = request.user.followings.all()
+    post_list = []
+    for following in following_list:
+        post_list += list(Post.objects.filter(author = following))
+    cnt = len(post_list)
+    if cnt < 20:
+        all_posts = Post.objects.order_by('-pub_date')
+        for post in all_posts:
+            if post not in post_list:
+                post_list.append(post)
+                cnt += 1
+            if cnt >= 20:
+                break
+    else:
+        # 최신 20개 글만 가져오기
+        post_list.sort(key=itemgetter('pub_date'), reverse=True)
+        post_list = post_list[:20]
+        
+    return render(request, 'home.html', {'post_list':post_list})
 
 def new(request):
     post = PostForm()
@@ -27,27 +44,27 @@ def create(request):
         new_post = form.save(commit=False)
         new_post.pub_date = timezone.now()
         if request.user.is_authenticated:
-            new_post.user = request.user
+            new_post.author = request.user
             new_post.save()
             return redirect('detail', new_post.id)
     return redirect('home')
 
-def edit(request, id):
-    post = Post.objects.get(id = id)
-    edit_post = PostForm(value=post)
-    return render(request, 'edit.html',{'post':edit_post})
-
 def update(request, id):
-    form = PostForm(request.POST, request.FILES)
-    if form.is_valid():
-        update_post = form.save(commit=False)
-        update_post.pub_date = timezone.now()
-        update_post.save()
-        return redirect('detail', update_post.id)
-    return redirect('home')
+    post = get_object_or_404(Post, pk = id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('detail', post.id)
+        else:
+            return redirect('home')
+    else:
+        form = PostForm(instance=post)
+        return render(request, 'edit.html', {'post':form})
 
 def delete(request, id):
-    delete_post = Post.objects.get(id=id)
+    delete_post = get_object_or_404(Post, pk = id)
     delete_post.delete()
     return redirect('home')
 
@@ -67,8 +84,10 @@ def comment_create(request, post_id):
     comment.save()
     response = {
         'comment_id': comment.id,
+        'writer_profile_image': writer.profile_image.url,
         'writer_name': writer.name,
         'writer_major': writer.major,
+        'writer_studentNum': writer.studentNum,
         'content': content,
         'pub_date': comment.pub_date
     }

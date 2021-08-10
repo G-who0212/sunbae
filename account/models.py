@@ -4,7 +4,7 @@ from django.conf import settings
 # Create your models here.
 
 class CustomUser(AbstractUser):
-    profile_image = models.ImageField(upload_to = "profile/", blank=True, null=True)  #사진
+    profile_image = models.ImageField(upload_to = "profile/", default = "profile/blank_profile_image.png")  #사진
 
     name = models.CharField(max_length=100)  #이름
 

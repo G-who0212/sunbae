@@ -3,34 +3,27 @@
 {% block content %}
 <a href="{%url 'home'%}">홈화면</a>
 {% if user.is_authenticated %}
-
-<a href="{%url 'change'%}">회원정보 수정 / 커리어 및 활동 추가</a>
 <div class = "container">
     <h1>
-        {% if user.profile_image %}
-        <img src="{{user.profile_image.url}}" alt="사진" width=100px height=100px> 
+        {% if user.image %}
+        <img src="{{user.image.url}}" alt="사진"> 
         {% endif %}
+        {{user.name}}({{user.major}}{{user.studentNum}})</h1>
         <br>
-        <p>{{user.name}}</p>
-        <p>{{user.major}}  {{user.studentNum}}학번</p></h1>
-        <br>
-        <a href= "{%url 'see_follower' user.pk%}">팔로워</a>: {{ user.followers.all|length }}명  <a href= "{%url 'see_following' user.pk%}"> 팔로잉</a>  : {{ user.followings.count }}명
-        <br>
+        팔로우 : {{user.followers}} 팔로잉 : {{user.following}}
         {% endif %}
         <br>
         <br>
-        <h2>경력</h2>
+        경력
         {% for career in careers %}
         <br>
         {{career.company}}
         <br>
         {{career.title}}
-        <br>
-        {{career.careerRoleAchievement}}
         {%endfor%}
         <br>
         <br>
-        <h2>대학생 활동 경력</h2>
+        대학생 활동 경력
         {% for univ in univs %}
         <br>
         {{univ.universityActivity}}
@@ -39,7 +32,6 @@
         {%endfor%}
         <br>
         <br>
-        <h2>게시글</h2>
         {% for post in posts %}
             <div>
                 {{post.body}}

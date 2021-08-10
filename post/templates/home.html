@@ -1,29 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .custom-border {
+        border: #5B9BD5 1px solid;
+    }
+
+    .profile-image {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+</style>
+
 <div class="container">
-  
-<!-- <h2><a href="{%url 'login'%}">로그인</a></h2>
-<h2><a href="{%url 'logout'%}">로그아웃</a></h2>
-<h2><a href="{%url 'register'%}">회원가입</a></h2>
-<h2><a href="{%url 'mypage'%}">마이페이지</a></h2>
-<h2><a href="{%url 'new'%}">글쓰기</a></h2> -->
-
-{% if user.is_authenticated %}
-authenticated
-{%endif%}
-
-    <div class="container">
-    {% for post in posts %}
-        <div>
-            <h3><a href="{% url 'otherpage' post.id %}">{{post.user.name}}  {{post.user.major}}</a></h3>
-            {{post.body}} <br>
-            {{post.category}} <br>
-            {{post.hashtag}} <br>
-            {{post.link}} <br>
-            <a href="{%url 'detail' post.id%}">...more</a>
-            <br>
-        </div> -->
-    {%endfor%} 
-</div>    
+    {% for post in post_list %}
+    <div class="card my-2 custom-border">
+        <div class="card-body">
+            <div>
+            <img class="profile-image" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
+            <span class="fs-3 fw-bold mx-1">{{post.author.name}}</span>
+            <span class="fs-3">({{post.author.major}} {{post.author.studentNum}})</span>
+            <span style="float:right">{{post.pub_date|date:'Y-m-d H:i'}}</span>
+            </div>
+            <div class="mt-3">
+                <div class="p-2 mb-3 custom-border">
+                    {{post.body | slice:":300"}}
+                    ...<a href="{% url 'detail' post.id %}">더보기</a>
+                </div>
+                <p class="category">{{post.category}}</p>
+                <p class="hashtag">{{post.hashtag}}</p>
+                <p class="like">
+                    좋아요 <span id="like_count">{{post.like.count}}</span>명
+                    <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
+                        {%if request.user in post.like.all%}
+                        <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+                        <i id="heart" class="fas fa-heart"></i>
+                        {%else%}
+                        <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+                        <i id="heart" class="far fa-heart"></i>
+                        {%endif%}
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

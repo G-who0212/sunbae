@@ -30,6 +30,7 @@ class Post(models.Model):
         choices=CATEGORY_CHOICES,
         default='develop',
     ) 
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     pub_date = models.DateTimeField()#올린 날짜
     body = models.TextField()# 내용
     hashtag = models.CharField(max_length=50) #해쉬태그
