@@ -36,48 +36,88 @@
 
     *{font-family: 'Noto Sans KR', sans-serif;}
 
-    #logo {font-weight : 400; 
-      font-size: 20px; 
-      font-family: 'Black Han Sans', sans-serif;
-      padding: 5px 7.6px;margin: 5px 7.5px;}
+    #nav1
+    {
+      
+      width:100%;
+      height: 10%;
+      padding: 20px;
+      margin: 20px;
+      border-color: white;
+      border-style:solid;
+      padding-top : 10px;
+      margin-top : 10px;
+      float: right;
+    }
+
+    #logo { 
+      width:30px;
+      padding: 5px 7.5px;
+      margin: 5px 7.5px;
+      line-height: 10%;
+      height:10%;}
 
     #searchbutton {background-color : #5B9BD5; 
       color: white; 
       font-size: 7.5px;
       text-align : center;
       width:50px; height:30px;
-      border-radius: 5px;
       border-style : none;
+      /* border-radius: 5px; */
+      /* border-style : none;
+      line-height: 10%;
+      height:10%; 
+      padding: 5px 7.5px; 
+      margin: 5px 7.5px; */
     }
 
     #menubar {
-      background-color : white;
-      height: 30px;
+      
+      height: 50px;
       width: 850px;
+      
+     
+    }
+
+    #menubar ul {
+      
+      list-style-type : none;
+      margin : 0;
+      padding : 0;
+      
+    }
+
+    #menubar ul li {
+      
+      display : inline;
+      text-align: center;
+      line-height: 10%;
+      height:10%;
     }
         
     
   </style>
 </head>
-
 <body>
-  <div class="container">
-  <nav class="navbar navbar-default">
+  <div class="container" >
+  <nav class="navbar-default" id="nav1">
     <div class="container-fluid" >
-      <div class="navbar-header">
-        <a class="navbar-brand"  href="#">
-          <img alt="Brand" src="sunbae\images\sunbaenim.PNG"></a>
+      <div class="navbar-header" >
+        <a class="navbar-brand"  href="{%url 'home'%}" >
+          <img alt="Brand" id="logo" src="C:\Users\LG\Desktop\sunbae\images\sunbaenim.PNG" ></a>
         
       
-        <form class="navbar-form navbar-left" role="search">
+        <form class="navbar-form navbar-left" role="search" >
           <div class="form-group">
-            <input class="form-control me-2" type="search" placeholder="키워드를 입력하세요" aria-label="Search" style="width:150px; height:30px">
+            <input class="form-control me-2" type="search" placeholder="키워드를 입력하세요" aria-label="Search" 
+            style="width:150px; height:30px">
+            <!-- line-height: 10%; height:10%; padding: 5px 7.5px; margin: 5px 7.5px;"> -->
           
           <button type="submit" id ="searchbutton"> 검색 </button>
           </div>
         </form>
         <div id = "menubar">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-right">
           <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
           <li><a class="navbar-brand" href="{%url 'mypage'%}">마이페이지</a></li>
           <li><a class="navbar-brand" href="{%url 'register'%}">회원가입</a></li>

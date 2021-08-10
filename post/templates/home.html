@@ -16,7 +16,7 @@ authenticated
     <div class="container">
     {% for post in posts %}
         <div>
-            <h3><a href="{% url 'otherpage' post.user.id %}">{{post.user}}{{post.user.major}}</a></h3>
+            <h3><a href="#">{{post.user}}{{post.user.major}}</a></h3>
             {{post.body}} <br>
             {{post.category}} <br>
             {{post.hashtag}} <br>
