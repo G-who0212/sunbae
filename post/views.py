@@ -10,8 +10,10 @@ from account.models import CustomUser
 
 # Create your views here.
 def home(request):
-    posts = Post.objects.order_by('-pub_date')
-    return render(request, 'home.html', {'posts':posts})
+    if not request.user.is_authenticated:
+        return redirect('login')
+    post_list = Post.objects.order_by('-pub_date')
+    return render(request, 'home.html', {'post_list':post_list})
 
 def new(request):
     post = PostForm()
