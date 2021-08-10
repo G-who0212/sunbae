@@ -98,7 +98,7 @@ def follow(request,pk):
             user.followers.remove(request.user)
         else:
             user.followers.add(request.user)
-    return redirect('myprofile',user.pk)
+    return redirect('profile',user.pk)
 
 
 def seefollow(request,pk):
@@ -114,6 +114,6 @@ def seefollow(request,pk):
         posts = Post.objects.filter(user=request.user).order_by('-pub_date')
         careers = Career.objects.filter(user=request.user)
         univs = Univ.objects.filter(user=request.user)
-        return render(request,'myprofile.html', {'posts':posts, 'careers':careers, 'univs':univs})
+        return render(request,'profile.html', {'posts':posts, 'careers':careers, 'univs':univs})
     else:
         return render(request, 'ifNotAuthenticated.html')
