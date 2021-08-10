@@ -48,7 +48,9 @@ def register_view(request):
         if form.is_valid():
             user = form.save() 
             login(request, user) 
-        return redirect("registerCareer")
+            return redirect("registerCareer")
+        else:
+            return render(request, 'invalid_password.html')
     else:
         form = RegisterForm()
         # form = UserCreationForm()
@@ -124,6 +126,27 @@ def otherpage(request, id):
     univs = Univ.objects.filter(user=author)
     return render(request, 'otherprofile.html', {'customuser':customuser, 'posts':posts, 'careers':careers, 'univs':univs})
 
+
+def change(request):
+    if request.method == 'POST': 
+        form = AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            if username == request.user.username:
+                password = form.cleaned_data.get("password")
+                user = authenticate(request=request, username=username, password=password)
+                if user is not None:
+                    return render(request, 'change.html')
+            else:
+                return render(request, 'wrongIDorPW.html')   
+        else:
+             return render(request, 'wrongIDorPW.html')
+        return redirect("home")
+    else:
+        form = AuthenticationForm()
+        return render(request, 'doubleCheck.html', {'form':form})
+
+
 def change_info(request):
     if request.method == "POST":
         form = ChangeForm(request.POST, request.FILES, instance=request.user) #request.FILES추가
@@ -150,3 +173,36 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
         return render(request, 'changePassword.html', {'form':form})
+
+#careers = Career.objects.filter(id=request.user.id)
+def career_show(request):
+    careers = Career.objects.filter(user=request.user)
+    return render(request, 'careerShow.html', {'careers':careers})
+
+def career_edit(request, id):
+    career = get_object_or_404(Career, pk=id)
+
+    if request.method == 'POST':
+	    form = CareerForm(request.POST, instance=career)
+	    if form.is_valid():
+		    career = form.save()
+		    return redirect("home")
+    else:
+	    form = CareerForm(instance=career)
+    return render(request, 'signUpCareer.html', {'form':form})
+
+def university_show(request):
+    univs = Univ.objects.filter(user=request.user)
+    return render(request, 'universityShow.html', {'univs':univs})
+
+def university_edit(request, id):
+    univ = get_object_or_404(Univ, pk=id)
+
+    if request.method == 'POST':
+	    form = UnivForm(request.POST, instance=univ)
+	    if form.is_valid():
+		    univ = form.save()
+		    return redirect("home")
+    else:
+	    form = UnivForm(instance=univ)
+    return render(request, 'signUpUniv.html', {'form':form})

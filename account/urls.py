@@ -14,4 +14,9 @@ urlpatterns = [
     path('chaneInfo/', change_info, name="changeInfo"),
     path('withdraw/', withdraw, name="withdraw"),
     path('changePW/', change_password, name="changePW"),
+    path('change/', change, name="change"),
+    path('careerEdit/<str:id>', career_edit, name="careerEdit"),
+    path('careerShow/', career_show, name="careerShow"),
+    path('univEdit/<str:id>', university_edit, name="univEdit"),
+    path('univShow/', university_show, name="univShow"),
 ]
