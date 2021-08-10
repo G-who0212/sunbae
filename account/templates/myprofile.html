@@ -12,13 +12,13 @@
         {% endif %}
         <br>
         <p>{{user.name}}</p>
-        <p>{{user.major}}{{user.studentNum}}</p></h1>
+        <p>{{user.major}}  {{user.studentNum}}학번</p></h1>
         <br>
-        팔로우   팔로잉  
+        <h2>팔로우   팔로잉</h2>  
         {% endif %}
         <br>
         <br>
-        경력
+        <h2>경력</h2>
         {% for career in careers %}
         <br>
         {{career.company}}
@@ -29,7 +29,7 @@
         {%endfor%}
         <br>
         <br>
-        대학생 활동 경력
+        <h2>대학생 활동 경력</h2>
         {% for univ in univs %}
         <br>
         {{univ.universityActivity}}
@@ -38,6 +38,7 @@
         {%endfor%}
         <br>
         <br>
+        <h2>게시글</h2>
         {% for post in posts %}
             <div>
                 {{post.body}}
