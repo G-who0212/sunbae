@@ -28,7 +28,6 @@ def create(request):
         new_post.pub_date = timezone.now()
         if request.user.is_authenticated:
             new_post.user = request.user
-            new_post.aID = request.user.id
             new_post.save()
             return redirect('detail', new_post.id)
     return redirect('home')

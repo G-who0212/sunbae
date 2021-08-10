@@ -6,12 +6,13 @@
         {% if customuser.image %}
         <img src="{{customuser.image.url}}" alt="사진"> 
         {% endif %}
-        {{customuser.name}}({{customuser.major}}{{customuser.studentNum}})</h1>
+        <p>{{customuser.name}}</p>
+        <p>{{customuser.major}}  {{customuser.studentNum}}학번</p></h1>
         <br>
-        팔로우 : {{customuser.followers}} 팔로잉 : {{customuser.following}}
+        <h2>팔로우 :  팔로잉 : </h2>
         <br>
         <br>
-        경력
+        <h2>경력</h2>
         {% for career in careers %}
         <br>
         {{career.company}}
@@ -20,7 +21,7 @@
         {%endfor%}
         <br>
         <br>
-        대학생 활동 경력
+        <h2>대학생 활동 경력</h2>
         {% for univ in univs %}
         <br>
         {{univ.universityActivity}}
@@ -29,6 +30,7 @@
         {%endfor%}
         <br>
         <br>
+        <h2>게시글</h2>
         {% for post in posts %}
             <div>
                 {{post.user}}{{post.major}}

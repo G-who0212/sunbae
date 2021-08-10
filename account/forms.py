@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 from django import forms
 from .models import Career, Univ
@@ -20,3 +20,7 @@ class UnivForm(forms.ModelForm):
         model = Univ
         fields = ['universityActivity', 'universityTitle', 'university_YearStart', 'university_MonthStart', 'university_YearEnd', 'university_MonthEnd', 'university_RoleAchievement']
 
+class ChangeForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ['profile_image', 'name', 'major', 'studentNum', 'campus', 'schoolEmail', 'websiteName', 'websiteURL']

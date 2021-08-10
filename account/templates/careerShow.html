@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="{%url 'home'%}">홈화면</a>
+
+{%for career in careers%}
+<p><a href="{%url 'careerEdit' career.id%}">{{career.company}}  {{career.title}}</a></p>
+{{career.careerRoleAchievement}}
+<br>
+<br>
+{%endfor%}
+{% endblock %}
