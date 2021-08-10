@@ -1,10 +1,51 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<style>
+    .custom-border {
+        border: #5B9BD5 1px solid;
+    }
+
+    .profile-image {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+</style>
 
 {% if user.is_authenticated %}
-authenticated
+<div class="container">
+    <div class="card my-2 custom-border">
+        <div class="card-body">
+            <div>
+            <img class="profile-image" src="{{request.user.profile_image.url}}" alt="프로필 사진">
+            <span class="fs-3 fw-bold mx-1">{{ request.user.name }}</span>
+            <span class="fs-3">({{ request.user.major }} {{ request.user.studentNum }})</span>
+            <span style="float:right">2021.08.08</span>
+            </div>
+            <div class="mt-3">
+                <div class="p-2 mb-3 custom-border">
+                    이것은 게시글 내용인데 얼마나 많이 보이게 해야될지 모르겠어요 너무 어렵네요. 대충 300글자로 맞춰보겠습니다.
+                    ...<a href="#">더보기</a>
+                </div>
+                <p class="category">카테고리</p>
+                <p class="hashtag">해시태그</p>
+                <p class="like">
+                    좋아요 <span id="like_count">{{post.like.count}}</span>명
+                    <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
+                        {%if request.user in post.like.all%}
+                        <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+                        <i id="heart" class="fas fa-heart"></i>
+                        {%else%}
+                        <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+                        <i id="heart" class="far fa-heart"></i>
+                        {%endif%}
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 {% else %}
 <div class = "container" style="text-align : center;">
     <div class="mb-4">
