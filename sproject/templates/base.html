@@ -59,6 +59,7 @@
   <div class="container">
    
        <p id = "logo">선배님</p>
+       {% if request.user.is_authenticated %}
         <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
           <form class="d-flex">
@@ -68,15 +69,13 @@
             <ul class="nav nav-tabs">
               <li role="presentation" class="menu"><a href="{%url 'new'%}">글쓰기</a></li>
               <li role="presentation" class="menu"><a href="{%url 'profile' request.user.id %}">마이페이지</a></li>
-              <li role="presentation" class="menu"><a href="{%url 'register'%}">회원가입</a></li>
-              <li role="presentation" class="active" class="menu"><a href="{%url 'login'%}">로그인</a></li>
               <li role="presentation" class="menu"><a href="{%url 'logout'%}">로그아웃</a></li>
           
             </ul>
           </form>
         </div>
       </nav>
-    
+      {% endif %}
   </div>
    {% block content %}
    {% endblock %}

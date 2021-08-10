@@ -5,19 +5,31 @@
 
 {% if user.is_authenticated %}
 authenticated
-{%endif%}
+{% else %}
+<div class = "container" style="text-align : center;">
+    <div class="mb-4">
+        <h2>학교 동문에게 커리어를 묻다</h2>
+        <h1><strong>선배님</strong></h1>
+    </div>
 
-    <div class="container">
-    {% for post in posts %}
-        <div>
-            <h3><a href="{% url 'profile' post.author.id %}">{{post.author}}{{post.author.major}}</a></h3>
-            {{post.body}} <br>
-            {{post.category}} <br>
-            {{post.hashtag}} <br>
-            {{post.link}} <br>
-            <a href="{%url 'detail' post.id%}">...더보기</a>
-            <br>
-        </div> -->
-    {%endfor%} 
-</div>    
+    <form action="{% url 'login' %}" method="post">
+        {%csrf_token%}
+        <div class="mb-2">
+            <label for="username">아이디</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div class="mb-3">
+            <label for="password">비밀번호</label>
+            <input type="password" name="password" id="password">
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary">로그인</button>
+        </div>
+    </form>
+    <div class="mb-3">
+        <a href="{% url 'register' %}"><button class="btn btn-secondary">회원가입</button></a>
+    </div>
+    <a href="#">아이디/비밀번호 찾기</a>
+</div>
+{% endif %}
 {% endblock %}
