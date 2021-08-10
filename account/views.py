@@ -81,8 +81,14 @@ def register_view_univ(request):
         return render(request, 'signupUniv.html', {'form':form})        
 
 
-def mypage(request):
-    return render(request,'myprofile.html')
+def profile(request, id):
+    user = get_object_or_404(CustomUser,pk=id)
+    follower_list = user.followers.all()
+    following_list = user.followings.all()
+    career_list = Career.objects.filter(user = id)
+    univ_list = Univ.objects.filter(user = id)
+    post_list = Post.objects.filter(author = id)
+    return render(request,'profile.html', {'user':user, 'follower_list':follower_list, 'following_list':following_list, 'career_list':career_list, 'univ_list':univ_list, 'post_list':post_list})
 
 def follow(request,pk):
     CustomUser = get_user_model()
