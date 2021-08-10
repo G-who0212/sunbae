@@ -11,4 +11,7 @@ urlpatterns = [
     path('<int:pk>/follow/',follow, name="follow"),
     path('<int:pk>/seefollow/',seefollow,name="seefollow"),
     path('otherpage/<str:id>', otherpage, name="otherpage"),
+    path('chaneInfo/', change_info, name="changeInfo"),
+    path('withdraw/', withdraw, name="withdraw"),
+    path('changePW/', change_password, name="changePW"),
 ]
