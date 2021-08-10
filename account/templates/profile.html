@@ -29,15 +29,14 @@
         <div class="p-0 fs-3 mb-2">
             {{user.name}}({{user.major}}{{user.studentNum}})
             {% if request.user == user %}
-            <!-- 프로필 수정 추가 -->
-            <a class="link-secondary" href="#"><i class="fas fa-user-edit"></i></a>
+            <a class="link-secondary" href="{% url 'change' %}"><i class="fas fa-user-edit"></i></a>
             {% endif %}
         </div>
         {% if request.user != user %}
         <a href="{% url 'follow' user.id %}"><button class="me-2 btn btn-secondary btn-sm">팔로우</button></a>
         {% endif %}
-        <div class="p-0">팔로우 {{follower_list | length}}명</div>
-        <div class="p-0">팔로잉 {{following_list | length}}명</div>
+        <a href="{% url 'see_follower' user.id %}"><div class="p-0">팔로워 {{follower_list | length}}명</div></a>
+        <a href="{% url 'see_following' user.id %}"><div class="p-0">팔로잉 {{following_list | length}}명</div></a>
     </div>
     <div class="row h-50">
         <div class="col-4 me-2 mh-100 overflow-auto custom-border">

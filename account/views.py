@@ -133,8 +133,8 @@ def mypage(request):
 
 def otherpage(request, id):
     post = get_object_or_404(Post, pk=id)
-    author = post.user
-    aID = post.user.id
+    author = post.author
+    aID = author.id
     customuser = get_object_or_404(CustomUser, pk=aID)
     posts = Post.objects.filter(user=author).order_by('-pub_date')
     careers = Career.objects.filter(user=author)

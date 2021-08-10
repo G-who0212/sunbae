@@ -38,7 +38,7 @@ class Post(models.Model):
     link = models.CharField(max_length=100, blank=True, null=True)#링크
     
     like = models.ManyToManyField(CustomUser, related_name='likes',blank=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+
     def summary(self):
         return self.body[:100]
 

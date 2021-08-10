@@ -97,15 +97,14 @@ class CustomUser(AbstractUser):
         )  #학번
 
     CAMPUS_CHOICES = [#캠퍼스 선택지
-        ('SC', '서울캠퍼스'),
-        ('SJC', '세종캠퍼스'),
-        ('DHN', '대학로캠퍼스'),
+        ('서울캠퍼스', '서울캠퍼스'),
+        ('세종캠퍼스', '세종캠퍼스'),
     ]
 
     campus = models.CharField(#캠퍼스
         max_length=50,
         choices=CAMPUS_CHOICES,
-        default='SC'
+        default='서울캠퍼스'
     )
 
     schoolEmail = models.CharField(max_length=50) #이메일
@@ -114,7 +113,7 @@ class CustomUser(AbstractUser):
     websiteName = models.CharField(max_length=150, blank=True, null=True) #이름
     websiteURL = models.CharField(max_length=150, blank=True, null=True) #URL
 
-    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followings',blank=True, null=True)
+    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followings',blank=True)
 
 
 
