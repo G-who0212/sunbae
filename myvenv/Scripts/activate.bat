@@ -8,7 +8,11 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
+<<<<<<< HEAD
 set VIRTUAL_ENV=C:\Users\김유진\OneDrive\문서\GitHub\sunbae\myvenv
+=======
+set VIRTUAL_ENV=C:\Users\USER\OneDrive\바탕 화면\sunbaeProject\myvenv
+>>>>>>> page1,2
 
 if not defined PROMPT set PROMPT=$P$G
 

@@ -1,31 +1,133 @@
 <!DOCTYPE html>
 <html lang="kr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <style>
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+
+  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  <!-- 부가적인 테마 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>선배님 | 대학 선후배 커리어 플랫폼</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+  <style>
+
+    *{font-family: 'Noto Sans KR', sans-serif;}
+
+    #nav1
+    {
+      
+      width:100%;
+      height: 10%;
+      padding: 20px;
+      margin: 20px;
+      border-color: white;
+      border-style:solid;
+      padding-top : 10px;
+      margin-top : 10px;
+      float: right;
+    }
+
+    #logo { 
+      width:30px;
+      padding: 5px 7.5px;
+      margin: 5px 7.5px;
+      line-height: 10%;
+      height:10%;}
+
+    #searchbutton {background-color : #5B9BD5; 
+      color: white; 
+      font-size: 7.5px;
+      text-align : center;
+      width:50px; height:30px;
+      border-style : none;
+      /* border-radius: 5px; */
+      /* border-style : none;
+      line-height: 10%;
+      height:10%; 
+      padding: 5px 7.5px; 
+      margin: 5px 7.5px; */
+    }
+
+    #menubar {
+      
+      height: 50px;
+      width: 850px;
+      
+     
+    }
+
+    #menubar ul {
+      
+      list-style-type : none;
+      margin : 0;
+      padding : 0;
+      
+    }
+
+    #menubar ul li {
+      
+      display : inline;
+      text-align: center;
+      line-height: 10%;
+      height:10%;
+    }
         
-    </style>
+    
+  </style>
 </head>
 <body>
-   <header>
-       <p>선배님
-        <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-      </nav></p>
-   </header>
-
-   {% block content %}
-   {% endblock %}
+<div class="container" >
+  <nav class="navbar-default" id="nav1">
+    <div class="container-fluid" >
+      <div class="navbar-header" >
+        <a class="navbar-brand"  href="{%url 'home'%}" >
+          <img alt="Brand" id="logo" src="images\sunbaenim.PNG" ></a>
+        
+        {% if request.user.is_authenticated %}
+        <form class="navbar-form navbar-left" role="search" >
+          <div class="form-group">
+            <input class="form-control me-2" type="search" placeholder="키워드를 입력하세요" aria-label="Search" 
+            style="width:150px; height:30px">
+            <button id="searchbutton" type="submit"> 검색 </button>
+            
+            <div id = "menubar">
+              <ul class="nav nav-right">
+                <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
+                <li><a class="navbar-brand" href="{%url 'profile' request.user.id %}">마이페이지</a></li>
+                <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+</div>
+{% endif %}
+{% block content %}
+{% endblock %}
 </body>
 </html>

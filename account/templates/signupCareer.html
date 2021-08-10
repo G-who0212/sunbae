@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>경력 작성</h1>
+
+<form action="{% url 'registerCareer' %}" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit"> 제출 </button> 
+    <h3><p>추가 할 내용이 없으면 <a href="{%url 'registerUniv'%}">다음</a></p></h3>
+</form>
+{% endblock %}

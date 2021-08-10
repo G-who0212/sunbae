@@ -1,11 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Login</h1>
+
+<style>
+#loginbutton { 
+    color: white; 
+    font-size: 5px;
+    border-radius: 5px;
+    padding: 5px 7.5px; 
+    margin: 2px 3px;
+    border-style : none;
+    background-color: #5B9BD5;
+    }
+</style>
+
+<div class = "container" style="text-align : center;">
+<br>
+<br>
+<br>
+<h3>학교 동문에게 커리어를 묻다</h3>
+<h1 style="font-size : 40px"><strong>선배님</strong></h1>
+<br>
+<br>
 
 <form action="{% url 'login' %}" method="post">
     {%csrf_token%}
     {{form.as_p}}
-    <button type="submit"> submit </button> 
+    <button type="submit" id = "loginbutton"> 로그인 </button> 
 </form>
+<div class="mt-2 mb-3">
+    <a href="{% url 'register' %}"><button class="btn btn-secondary">회원가입</button></a>
+</div>
+<a href="#">아이디/비밀번호 찾기</a>
+</div>
 {% endblock %}

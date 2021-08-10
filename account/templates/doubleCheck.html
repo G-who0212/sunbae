@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>아이디 및 비밀번호 재확인</h1>
+<form action="{% url 'change' %}" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary"> 로그인 </button> 
+</form>
+</div>
+{% endblock %}

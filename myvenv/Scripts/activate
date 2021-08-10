@@ -37,7 +37,11 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
+<<<<<<< HEAD
 VIRTUAL_ENV="C:\Users\김유진\OneDrive\문서\GitHub\sunbae\myvenv"
+=======
+VIRTUAL_ENV="C:\Users\USER\OneDrive\바탕 화면\sunbaeProject\myvenv"
+>>>>>>> page1,2
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
