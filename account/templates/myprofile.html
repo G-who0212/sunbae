@@ -3,14 +3,18 @@
 {% block content %}
 <a href="{%url 'home'%}">홈화면</a>
 {% if user.is_authenticated %}
+
+<a href="{%url 'change'%}">회원정보 수정 / 커리어 및 활동 추가</a>
 <div class = "container">
     <h1>
-        {% if user.image %}
-        <img src="{{user.image.url}}" alt="사진"> 
+        {% if user.profile_image %}
+        <img src="{{user.profile_image.url}}" alt="사진" width=100px height=100px> 
         {% endif %}
-        {{user.name}}({{user.major}}{{user.studentNum}})</h1>
         <br>
-        팔로우 : {{user.followers}} 팔로잉 : {{user.following}}
+        <p>{{user.name}}</p>
+        <p>{{user.major}}{{user.studentNum}}</p></h1>
+        <br>
+        팔로우   팔로잉  
         {% endif %}
         <br>
         <br>
@@ -20,6 +24,8 @@
         {{career.company}}
         <br>
         {{career.title}}
+        <br>
+        {{career.careerRoleAchievement}}
         {%endfor%}
         <br>
         <br>
