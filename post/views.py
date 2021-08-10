@@ -7,12 +7,31 @@ from django.core.serializers.json import DjangoJSONEncoder
 from .models import Post, Comment
 from .forms import PostForm
 from account.models import CustomUser
+from operator import itemgetter
 
 # Create your views here.
 def home(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    post_list = Post.objects.order_by('-pub_date')
+    # 자신이 팔로우 한 사람들의 최신글 + 최신글을 20개까지 가져오기
+    following_list = request.user.followings.all()
+    post_list = []
+    for following in following_list:
+        post_list += list(Post.objects.filter(author = following))
+    cnt = len(post_list)
+    if cnt < 20:
+        all_posts = Post.objects.order_by('-pub_date')
+        for post in all_posts:
+            if post not in post_list:
+                post_list.append(post)
+                cnt += 1
+            if cnt >= 20:
+                break
+    else:
+        # 최신 20개 글만 가져오기
+        post_list.sort(key=itemgetter('pub_date'), reverse=True)
+        post_list = post_list[:20]
+        
     return render(request, 'home.html', {'post_list':post_list})
 
 def new(request):

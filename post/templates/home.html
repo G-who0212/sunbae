@@ -14,21 +14,22 @@
 </style>
 
 <div class="container">
+    {% for post in post_list %}
     <div class="card my-2 custom-border">
         <div class="card-body">
             <div>
-            <img class="profile-image" src="{{request.user.profile_image.url}}" alt="프로필 사진">
-            <span class="fs-3 fw-bold mx-1">{{ request.user.name }}</span>
-            <span class="fs-3">({{ request.user.major }} {{ request.user.studentNum }})</span>
-            <span style="float:right">2021.08.08</span>
+            <img class="profile-image" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
+            <span class="fs-3 fw-bold mx-1">{{post.author.name}}</span>
+            <span class="fs-3">({{post.author.major}} {{post.author.studentNum}})</span>
+            <span style="float:right">{{post.pub_date|date:'Y-m-d H:i'}}</span>
             </div>
             <div class="mt-3">
                 <div class="p-2 mb-3 custom-border">
-                    이것은 게시글 내용인데 얼마나 많이 보이게 해야될지 모르겠어요 너무 어렵네요. 대충 300글자로 맞춰보겠습니다.
-                    ...<a href="#">더보기</a>
+                    {{post.body | slice:":300"}}
+                    ...<a href="{% url 'detail' post.id %}">더보기</a>
                 </div>
-                <p class="category">카테고리</p>
-                <p class="hashtag">해시태그</p>
+                <p class="category">{{post.category}}</p>
+                <p class="hashtag">{{post.hashtag}}</p>
                 <p class="like">
                     좋아요 <span id="like_count">{{post.like.count}}</span>명
                     <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
@@ -44,5 +45,6 @@
             </div>
         </div>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
