@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 # Create your models here.
 
 class CustomUser(AbstractUser):
@@ -113,8 +114,8 @@ class CustomUser(AbstractUser):
     websiteName = models.CharField(max_length=150, blank=True, null=True) #이름
     websiteURL = models.CharField(max_length=150, blank=True, null=True) #URL
 
-    followers = models.ManyToManyField("self",related_name='followings',blank=True)
-    followings = models.ManyToManyField("self",related_name='followers',blank=True)
+    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followings',blank=True, null=True)
+
 
 
 

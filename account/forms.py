@@ -4,6 +4,7 @@ from django import forms
 from .models import Career, Univ
 
 
+
 class RegisterForm(UserCreationForm):
     class Meta:
         model = CustomUser

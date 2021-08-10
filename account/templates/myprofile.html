@@ -14,7 +14,8 @@
         <p>{{user.name}}</p>
         <p>{{user.major}}  {{user.studentNum}}학번</p></h1>
         <br>
-        <h2>팔로우   팔로잉</h2>  
+        <a href= "{%url 'see_follower' user.pk%}">팔로워</a>: {{ user.followers.all|length }}명  <a href= "{%url 'see_following' user.pk%}"> 팔로잉</a>  : {{ user.followings.count }}명
+        <br>
         {% endif %}
         <br>
         <br>
