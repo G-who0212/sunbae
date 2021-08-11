@@ -28,6 +28,9 @@
                     {{post.body | slice:":300"}}
                     ...<a href="{% url 'detail' post.id %}">더보기</a>
                 </div>
+                {% if post.image %}
+                <img src="{{post.image.url}}" alt="사진" width="130px"height="100px"> <br>
+                {%endif%}
                 <p class="category">{{post.category}}</p>
                 <p class="hashtag">{{post.hashtag}}</p>
                 <p class="like">
