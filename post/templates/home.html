@@ -19,7 +19,7 @@
         <div class="card-body">
             <div>
             <img class="profile-image" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
-            <span class="fs-3 fw-bold mx-1">{{post.author.name}}</span>
+            <a href="{%url 'otherpage' post.id%}"><span class="fs-3 fw-bold mx-1">{{post.author.name}}</span></a>
             <span class="fs-3">({{post.author.major}} {{post.author.studentNum}})</span>
             <span style="float:right">{{post.pub_date|date:'Y-m-d H:i'}}</span>
             </div>

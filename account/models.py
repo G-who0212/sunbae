@@ -167,6 +167,7 @@ class Career(models.Model):
         ('2019', '2019'),
         ('2020', '2020'),
         ('2021', '2021'),
+        ('재직중','재직중'),
     ]
 	careerYearEnd = models.CharField( #종료년
         max_length=10,
@@ -188,6 +189,7 @@ class Career(models.Model):
         ('10', '10'),
         ('11', '11'),
         ('12', '12'),
+        (' ','재직중')
     ]
 	careerMonthEnd = models.CharField( #종료 월 선택
         max_length=3,
@@ -250,6 +252,7 @@ class Univ(models.Model):
         ('2019', '2019'),
         ('2020', '2020'),
         ('2021', '2021'),
+        ('활동중','활동중'),
     ]
 	university_YearEnd = models.CharField( #종료 년
         max_length=10,
@@ -271,6 +274,7 @@ class Univ(models.Model):
         ('10', '10'),
         ('11', '11'),
         ('12', '12'),
+        (' ','활동중'),
     ]
 	university_MonthEnd = models.CharField( #종료 월
         max_length=3,

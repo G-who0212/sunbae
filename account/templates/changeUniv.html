@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>대학생 활동 수정</h1>
+
+<form action="{% url 'univEdit' univ.id%}" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit"> 제출 </button> 
+</form>
+{% endblock %}

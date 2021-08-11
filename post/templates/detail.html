@@ -12,7 +12,7 @@
         }
     </style>
     <div class="container">
-            <h3>{{post.author}}({{post.author.major}}{{post.author.studentNum}})</h3>
+            <h3><a href="{%url 'otherpage' post.id%}">{{post.author}}</a>({{post.author.major}}{{post.author.studentNum}})</h3>
             {{post.body}} <br>
             {{post.category}} <br>
             {{post.hashtag}} <br>
