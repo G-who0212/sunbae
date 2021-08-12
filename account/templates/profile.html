@@ -22,7 +22,6 @@
     }
 </style>
 
-{% if request.user.is_authenticated %}
 <div class="container h-100">
     <div class="row mb-3 p-3 custom-border">
         <img class="p-0 mb-2 profile-image" src="{{user.profile_image.url}}" alt="프로필 사진"><br>
@@ -121,7 +120,4 @@
         })
     }
 </script>
-{% else %}
-<a href="{%url 'login'%}">로그인해주세요</a>
-{% endif %}
 {% endblock %}
