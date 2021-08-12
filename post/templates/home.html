@@ -47,4 +47,27 @@
     </div>
     {% endfor %}
 </div>
+
+<script type="text/javascript">
+    function post_like(id) {
+        $.ajax({
+            url: "{%url 'likes'%}",
+            data: {
+                'post_id': id
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#like_count').html(response.like_count)
+                $('#message').html(response.message)
+                if (response.message == "좋아요")
+                {
+                    $('#heart').attr("class", "fas fa-heart")
+                } else if (response.message == "좋아요 취소")
+                {
+                    $('#heart').attr("class", "far fa-heart")
+                }
+            }
+        })
+    }
+</script>
 {% endblock %}
