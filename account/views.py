@@ -55,7 +55,7 @@ def register_view(request):
 
             current_site = get_current_site(request)
             domain = current_site.domain
-            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+            uidb64 = urlsafe_base64_encode(force_bytes(user.id))
             token = jwt.encode({'user':user.id}, SECRET_KEY['secret'], SECRET_KEY['algorithm'])
             message_data = message(domain, uidb64, token)
 
@@ -79,7 +79,8 @@ def activate(request, uidb64, token):
         user_dic = jwt.decode(token, SECRET_KEY['secret'], SECRET_KEY['algorithm'])
         if user.id == user_dic["user"]:
             user.email_auth = True
-            login(request, user) 
+            user.save()
+            login(request, user)
             return redirect("home")
     
         return JsonResponse({'message':'auth fail'}, status=400)

@@ -68,9 +68,6 @@
                     {{post.get_category_display}} <br></div>
                     <div id="id_category">
                     {{post.hashtag}} <br></div>
-                <p class="like" style="font-size:12px;">
-                    좋아요 <span id="like_count">{{post.like.count}}</span>명
-                </p>
 
                 <a href="{%url 'detail' post.id%}"><button type="button" class="btn btn-primary" style="float:right; margin-left:5px;">댓글달기</button></a>
 
