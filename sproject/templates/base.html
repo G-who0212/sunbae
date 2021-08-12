@@ -60,10 +60,9 @@
 </head>
 <body>
   {% load static %}
-  <div class="container">
-    <div style="padding:auto; margin:auto;"><a class="navbar-brand"  href="{%url 'home'%}" >
-      <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px;"></a>
-    </div>
+  <nav class="container">
+    <a class="navbar-brand"  href="{%url 'home'%}" style='text-align:center;'  >
+      <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px;">
 
     <nav class="navbar navbar-light bg-light" style='background-color:white !important'>
       <div class="container-fluid" >
@@ -93,6 +92,7 @@
         </form>
       </div>
     </nav>
+    </a>
   </div>
 
 </body>
