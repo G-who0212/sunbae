@@ -107,21 +107,28 @@
           <img alt="Brand" id="logo" src="images\sunbaenim.PNG" ></a>
         
         {% if request.user.is_authenticated %}
-        <form class="navbar-form navbar-left" role="search" >
+        <form class="navbar-form navbar-left" role="search" action="" method="GET">
           <div class="form-group">
-            <input class="form-control me-2" type="search" placeholder="키워드를 입력하세요" aria-label="Search" 
-            style="width:150px; height:30px">
-            <button id="searchbutton" type="submit"> 검색 </button>
-            
-            <div id = "menubar">
-              <ul class="nav nav-right">
-                <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
-                <li><a class="navbar-brand" href="{%url 'profile' request.user.id %}">마이페이지</a></li>
-                <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
-              </ul>
+              <select name="type">
+                  <option value="all">전체</option>
+                  <option value="content">내용</option>
+                  <option value="hashtag">해시태그</option>
+                  <option value="author">작성자</option>
+              </select>
+              <input class="form-control me-2" name="keyword" value="{{ keyword|default_if_none:'' }}" type="search" placeholder="키워드를 입력하세요" aria-label="Search" style="width:150px; height:30px">
+              <button id="searchbutton" type="submit"> 검색 </button>
             </div>
           </div>
         </form>
+
+        <div id = "menubar">
+          <ul class="nav nav-right">
+            <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
+            <li><a class="navbar-brand" href="{%url 'profile' request.user.id %}">마이페이지</a></li>
+            <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </nav>

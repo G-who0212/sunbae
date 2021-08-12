@@ -14,6 +14,13 @@
 </style>
 
 <div class="container">
+    {% if keyword %}
+        {% if not post_list %}
+        <h3>검색 결과가 없습니다.</h3>
+        {% else %}
+        <h3 class="mb-3">'{{keyword}}' 검색 결과입니다.</h3>
+        {% endif %}
+    {% endif %}
     {% for post in post_list %}
     <div class="card my-2 custom-border">
         <div class="card-body">
@@ -47,6 +54,12 @@
     </div>
     {% endfor %}
 </div>
+
+{% for message in messages %}
+<script type="text/javascript">
+    alert("키워드는 2글자 이상 입력해주세요.");
+</script>
+{% endfor %}
 
 <script type="text/javascript">
     function post_like(id) {
