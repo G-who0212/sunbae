@@ -1,12 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>경력 작성</h1>
+<div class = "container" style="text-align : center;">
+    <h1><strong>커리어 정보 입력</strong></h1>
+    <br>
+    <br>
+    <style>
+        a {text-decoration-line:none;}
 
-<form action="{% url 'registerCareer' %}" method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <button type="submit"> 제출 </button> 
-    <h3><p>추가 할 내용이 없으면 <a href="{%url 'registerUniv'%}">다음</a></p></h3>
-</form>
+        #careerbutton1 { 
+            color: #5B9BD5; 
+            font-size: 5px;
+            border-radius: 5px;
+            padding: 5px 7.5px; 
+            margin: 2px 3px;
+            border-style : none;
+            background-color: white;
+        }
+
+        .careerbutton2 { 
+            color: white; 
+            font-size: 5px;
+            border-radius: 5px;
+            padding: 5px 7.5px; 
+            margin: 2px 3px;
+            border-style : none;
+            background-color: #5B9BD5;
+            }
+        
+        .careerbutton2:hover {text-decoration-line:none; color: white;}
+    </style>
+
+    <form action="{% url 'registerCareer' %}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" id="careerbutton1"> 경력 추가하기 </button> 
+        <a href="{% url 'registerUniv' %}" class="careerbutton2">추가할 내용이 없으면</a>
+        <!-- <button type="button" id="careerbutton2" onClick="location.href='registerUniv'"> 추가할 내용이 없으면 </button>         -->
+    </form>
+    
+    <br>
+    <!-- <h3><p><a href="{% url 'registerUniv' %}">추가할 내용이 없으면</a></p></h3> -->
+</div>
 {% endblock %}
+
+<!-- '추가할 내용이 없으면 url' 페이지 찾을 수 없다고 오류가 뜸(The current path, account/registerCareer/registerUniv, didn’t match any of these.) -->

@@ -6,7 +6,7 @@
     <br>
     <br>
     <style>
-        #univbutton { 
+        #univbutton2 { 
             color: white; 
             font-size: 5px;
             border-radius: 5px;
@@ -15,14 +15,24 @@
             border-style : none;
             background-color: #5B9BD5;
             }
+        
+        #univbutton1 { 
+            color: #5B9BD5; 
+            font-size: 5px;
+            border-radius: 5px;
+            padding: 5px 7.5px; 
+            margin: 2px 3px;
+            border-style : none;
+            background-color: white;
+            }
     </style>
 
     <form action="{% url 'registerUniv' %}" method="post">
         {%csrf_token%}
         {{form.as_p}}
         <br>
-        <button type="submit" id="univbutton"> 입력 </button> 
+        <button type="submit" id="univbutton1"> 경력 추가하기 </button> 
+        <button type="button" id="univbutton2" onclick="location.href='registerUniv'">회원가입</button>
     </form>
 </div>
-    <h3><p>추가 할 내용이 없으면 <a href="{% url 'home' %}">다음</a></p></h3>
 {% endblock %}
