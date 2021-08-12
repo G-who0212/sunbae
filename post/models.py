@@ -34,7 +34,7 @@ class Post(models.Model):
     pub_date = models.DateTimeField()#올린 날짜
     body = models.TextField()# 내용
     hashtag = models.CharField(max_length=50) #해쉬태그
-    image = models.ImageField(upload_to = "blog/", blank=True, null=True)# 이미지
+    image = models.ImageField(upload_to = "post/", blank=True, null=True)# 이미지
     link = models.CharField(max_length=100, blank=True, null=True)#링크
     
     like = models.ManyToManyField(CustomUser, related_name='likes',blank=True)

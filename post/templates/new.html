@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <style>
     .button {background-color : #5B9BD5; 
              color: white; 
-             font-size: 5px;
+             font-size: 13px;
              border-radius: 5px;
              padding: 5px 7.5px; 
              margin: 5px 7.5px;
@@ -16,21 +17,84 @@
     padding: 5px 7.6px;
     margin: 5px 7.5px;
     text-align : center;}
+
+    #textbox 
+    {
+        border : solid #5B9BD5;
+        padding : 20px 10px 10px 15px;
+        border-width:2px;
+    }
+    #id_category
+    {
+        font-size : 13px;
+    }
+    #id_body
+    {
+        font-size : 13px;
+        resize :none;
+        width : 100%
+    }
+    #id_image
+    {
+        font-size : 13px;
+    }
+    #id_image
+    {
+        font-size : 13px;
+    }
+
+    #id_hashtag
+    {
+        font-size : 13px;
+    }
+
+    .noprint
+    { display:none; }
+    
+
 </style>
 
-<div class = "container" style="text-align : center;">
+<div class = "container" style="text-align : left; margin-bottom: 50px;">
     <h1>게시물 업로드</h1>
     <br>
     <br>
+    <div id = "textbox">
     <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{post.as_p}}
-        <!-- <p><input type="text" name = "name" value={{user.name}}>
-        <input type="text" name = "major" value={{user.major}}>
-        <input type="text" name = "career" value={{user.career1Title}}></p>
-        <br> -->
-        <button type="submit" class="button"> 업로드하기 </button>
-        <!-- <a href="create/?name={{user.name}}&major={{user.major}}&career={{user.career1Title}}"> <button type="submit"> submit </button> </a> -->
+            {%csrf_token%}
+            <div class="noprint">
+            <input type="{%csrf_token%}" name="csrfmiddlewaretoken" value="JURujI2cQsww7K0BuYgMhmTBx7wIO0TkNhH64FFINvRzoViAfMD37tNWb3OuLju6" ></div>
+            <p id="id_category"><label for="id_category">게시글 카테고리 : </label> <select name="category" id="id_category">
+                <option value="management">총무 및 사무</option>
+                <option value="business">영업</option>
+                <option value="PerDepart">인사</option>
+                <option value="customerC">고객상담</option>
+                <option value="marketing">마케팅</option>
+                <option value="trade">유통 및 무역</option>
+                <option value="design">디자인</option>
+                <option value="develop" selected>개발</option>
+                <option value="judicial">법무 및 특허</option>
+                <option value="strategy">전략 및 기획</option>
+                <option value="financial">재무 및 회계</option>
+                <option value="sales">구매 및 조달</option>
+                <option value="service">서비스</option>
+                <option value="profession">전문직</option>
+                <option value="medical">의료 및 제약</option>
+                <option value="educ">교육직</option>
+                <option value="construct">건설 및 인테리어</option>
+                <option value="research">연구 및 생산, 제조</option>
+                <option value="media">미디어</option>
+                <option value="etc">특수</option>
+
+    </select></p>
+
+    <p id="id_body"><label for="id_body">내용</label><br> 
+    <textarea name="body" rows="10" required id="id_body"></textarea></p>
+
+    <p id="id_hashtag"><label for="id_hashtag">해시태그 : </label> <input type="text" name="hashtag" maxlength="50" required id="id_hashtag" placeholder="#을 붙여 입력하세요"></p>
+
+    <p id="id_image"><label for="id_image">이미지 삽입</label> <input type="file" name="image" accept="image/*" id="id_image"></p>
+    <div style="text-align: center"><button type="submit" class="button" >게시글 업로드 </button></div>
     </form>
 </div>
+
 {% endblock %} 

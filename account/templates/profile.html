@@ -12,7 +12,7 @@
     }
 
     .custom-border {
-        border: #5B9BD5 1px solid;
+        border: #5B9BD5 2px solid;
     }
 
     .profile-image {
@@ -20,28 +20,60 @@
         height: 100px;
         object-fit: cover;
     }
+    #text_post
+    {
+        overflow: hidden; text-overflow: ellipsis; 
+        display: -webkit-box; 
+        -webkit-line-clamp: 3; 
+        -webkit-box-orient: vertical; 
+        word-wrap:break-word;   }
+    #id_category
+        {
+            font-size:11px;
+            margin-bottom: 5px;
+        }
+    .feeling_a 
+    {
+        background-color: #fff;
+        border: 2px solid #2199e8;
+        border-radius: 2px;
+        color: #2199e8;
+        font-size:13px;
+        float:right;
+        margin-left:5px;
+    }  
+        
 </style>
 
-<div class="container h-100">
+
+<div class="container h-150">
     <div class="row mb-3 p-3 custom-border">
         <img class="p-0 mb-2 profile-image" src="{{user.profile_image.url}}" alt="프로필 사진"><br>
-        <div class="p-0 fs-3 mb-2">
+        <div class="p-0  mb-2" style="font-size:20px">
             {{user.name}}({{user.major}}{{user.studentNum}})
             {% if request.user == user %}
             <a class="link-secondary" href="{% url 'change' %}"><i class="fas fa-user-edit"></i></a>
             {% endif %}
         </div>
+
+
         {% if request.user != user %}
-        <a href="{% url 'follow' user.id %}"><button class="me-2 btn btn-secondary btn-sm">팔로우</button></a>
+        {% if request.user in follower_list %}
+        <a href="{% url 'follow' user.id %}"><button class="btn btn-primary" style="float:right; font-size:13px;">팔로잉</button></a>
+        {%else%}
+        <a href="{% url 'follow' user.id %}"><button class="me-2 btn btn-secondary btn-sm" style="float:right; font-size:13px;">팔로우</button></a>
         {% endif %}
-        <a href="{% url 'see_follower' user.id %}"><div class="p-0">팔로워 {{follower_list | length}}명</div></a>
-        <a href="{% url 'see_following' user.id %}"><div class="p-0">팔로잉 {{following_list | length}}명</div></a>
+        {% endif %}
+    
+        <ul style="font-size:14px;">
+        <div class="p-0">팔로워<a href="{% url 'see_follower' user.id %}"> {{follower_list | length}}</a>명</div>
+        <div class="p-0">팔로잉<a href="{% url 'see_following' user.id %}"> {{following_list | length}}</a>명</div></a></ul>
     </div>
     <div class="row h-50">
-        <div class="col-4 me-2 mh-100 overflow-auto custom-border">
-            <div class="mt-2 p-1 custom-border">
-                <span class="fw-bold">경력</span>
-                <ul class="mt-2">
+        <div class="col-4 me-2 mh-100 overflow-auto custom-border"style="padding : 10px;">
+            <div class="mt-2 p-1 custom-border"style="margin-bottom : 10px;">
+                <span class="fw-bold" style="font-size:14px">경력</span>
+                <ul class="mt-2" style="font-size:12px">
                     {% for career in career_list %}
                     {% if career.company %}
                     <li>{{career.company}} {{career.title}}
@@ -51,9 +83,9 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="mt-2 mb-2 p-1 custom-border">
-                <span class="fw-bold">대학생 활동 경력</span>
-                <ul class="mt-2">
+            <div class="mt-2 mb-2 p-1 custom-border"style="padding : 10px;">
+                <span class="fw-bold"style="font-size:14px">대학생 활동 경력</span>
+                <ul class="mt-2" style="font-size:12px">
                     {% for univ in univ_list %}
                     {% if univ.universityActivity %}
                     <li>{{univ.universityActivity}} {{univ.universityTitle}}
@@ -64,8 +96,8 @@
                 </ul>
             </div>
         </div>
-        <div class="col ms-2 mh-100 overflow-auto custom-border">
-            <div class="mt-2 mb-2 fw-bold">게시글</div>
+        <div class="col ms-2 mh-100 overflow-auto custom-border"style="padding : 10px;">
+            <div class="mt-2 mb-2 fw-bold" style="font-size:14px">게시글</div>
             {% for post in post_list %}
             <div class="card my-2 custom-border">
                 <div class="card-body">
@@ -75,12 +107,19 @@
                         <a href="{% url 'delete' post.id %}"><button class="btn btn-danger btn-sm">삭제</button></a>
                     </div>
                     {% endif %}
-                    <p class="card-text">{{post.body | slice:":100"}}...<a href="{% url 'detail' post.id %}">더보기</a></p>
-                    <p class="category">{{post.category}}</p>
-                    <p class="hashtag">{{post.hashtag}}</p>
-                    <p class="like">
-                        좋아요 <span id="like_count">{{post.like.count}}</span>명
-                        <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
+
+                    <div style="font-size:12px; padding:10px; margin-bottom:5px;">
+                        <span id= "text_post">{{post.body}}</span>
+                    </div>
+                    <p style="float:right; font-size:12px"><a href="{% url 'detail' post.id %}">자세히 보기</a></p>
+                    <div id="id_category">
+                        {{post.get_category_display}} <br></div>
+                        <div id="id_category">
+                        {{post.hashtag}} <br></div>
+
+                    <a href="{%url 'detail' post.id%}"><button type="button" class="btn btn-primary" style="float:right; margin-left:5px;font-size:12px;">댓글달기</button></a>
+
+                        <button id="{{post.id}}" class="feeling_a" onclick="post_like(this.id)">
                             {%if request.user in post.like.all%}
                             <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
                             <i id="heart" class="fas fa-heart"></i>
@@ -88,8 +127,8 @@
                             <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
                             <i id="heart" class="far fa-heart"></i>
                             {%endif%}
-                        </button>
-                    </p>
+                            <span id="like_count">{{post.like.count}}</span>
+                    </button>
                 </div>
             </div>
             {% endfor %}
