@@ -68,8 +68,7 @@
     <nav class="navbar navbar-light bg-light" style='background-color:white !important'>
       <div class="container-fluid" >
         
-          
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated and request.user.email_auth%}
         <form class="navbar-form navbar-left" role="search" action="" method="GET">
           {%csrf_token%}
           <div class="form-group">
