@@ -1,11 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>아이디 및 비밀번호 재확인</h1>
-<form action="{% url 'change' %}" method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <button type="submit" class="btn btn-primary"> 로그인 </button> 
-</form>
+
+<div class = "container" style="text-align : center;">
+    <h1><strong>아이디 및 비밀번호 재확인</strong></h1>
+    <br>
+    <br>
+    <style>
+    #doublecheckbutton { 
+        color: white; 
+        font-size: 5px;
+        border-radius: 5px;
+        padding: 5px 7.5px; 
+        margin: 2px 3px;
+        border-style : none;
+        background-color: #5B9BD5;
+        }
+    </style>
+    <form action="{% url 'change' %}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <br>
+        <button type="submit" id="doublecheckbutton"> 로그인 </button> 
+    </form>
 </div>
 {% endblock %}

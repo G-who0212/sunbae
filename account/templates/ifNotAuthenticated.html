@@ -1,8 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    a {text-decoration-line:none;}
 
-<h1>로그인을 하셔야 합니다.</h1>
+    #wrapper3 {display: table;}
+    #cell3 {display:table-cell; vertical-align: middle; text-align: center;} 
+    
+    .authenticatedbutton { 
+        color: white; 
+        font-size: 5px;
+        border-radius: 5px;
+        padding: 5px 7.5px; 
+        margin: 2px 3px;
+        border-style : none;
+        background-color: #5B9BD5;
+        }
+</style>
+
+<div id="wrapper3">
+    <div id="cell3"> 
+        <h3>로그인이 필요합니다.</h3>
+        <br>
+        <a href="{%url 'home'%}" class="authenticatedbutton">홈 화면</a>
+        <a href="{%url 'login'%}" class="authenticatedbutton">로그인 화면</a>
+        <a href="{%url 'register'%}" class="authenticatedbutton">회원가입</a>
+    </div>
+</div>
+{% endblock %} 
+<h3>로그인이 필요합니다.</h3>
 <a href="{%url 'home'%}">홈 화면</a>
 <a href="{%url 'login'%}">로그인 화면</a>
 <a href="{%url 'register'%}">회원가입</a>
