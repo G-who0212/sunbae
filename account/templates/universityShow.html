@@ -4,7 +4,7 @@
 <a href="{%url 'home'%}">홈화면</a>
 
 {%for univ in univs%}
-<p><a href="{%url '' univ.id%}">{{univ.universityActivity}}  {{univ.universityTitle}}</a></p>
+<p><a href="{%url 'univEdit' univ.id%}">{{univ.universityActivity}}  {{univ.universityTitle}}</a></p>
 <br>
 <br>
 {%endfor%}
