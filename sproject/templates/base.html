@@ -62,7 +62,7 @@
         <a class="navbar-brand"  href="{%url 'home'%}" >
           <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px;"></a>
         
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated and request.user.email_auth%}
         <form class="navbar-form navbar-left" role="search" action="" method="GET">
           {%csrf_token%}
           <div class="form-group">
