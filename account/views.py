@@ -116,6 +116,8 @@ def register_view_univ(request):
         form = UnivForm()
         return render(request, 'signupUniv.html', {'form':form})        
 
+def signupComplete(request):
+    return render(request, 'signupComplete.html')
 
 def profile(request, id):
     user = get_object_or_404(CustomUser,pk=id)

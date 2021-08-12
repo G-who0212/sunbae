@@ -92,6 +92,12 @@
             {{post.get_category_display}} <br></div>
             <div id="id_category">
             {{post.hashtag}} <br></div>
+            <!--사진 html 추가-->
+            {% if post.image %}
+            <div id="id_image">
+                <img src="{{post.image.url}}" alt="사진" width="130px"height="100px"><br>
+            </div>
+            {% endif %}
 
     
             {% if post.author == user %}

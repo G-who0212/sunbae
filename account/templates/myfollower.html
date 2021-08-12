@@ -42,8 +42,8 @@
           <h4 class="mr-10 ml-10 mb-5 p-5"> 
             {% with user_followers=user.followers.all %}
                 {%for myfollowers in user_followers %}
-                {% if user.profile_image %}
-                <img src="{{user.profile_image.url}}" alt="사진" width=100px height=100px> 
+                {% if myfollowers.profile_image %}
+                <img src="{{myfollowers.profile_image.url}}" alt="사진" width=100px height=100px> 
                 {% endif %}
                 {{myfollowers.name}} ({{myfollowers.major}}{{myfollowers.studentNum}})
                    <br>

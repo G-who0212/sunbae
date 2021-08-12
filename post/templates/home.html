@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+</head>
+
 <style>
     .custom-border {
         border: #5B9BD5 2px solid;
@@ -48,7 +52,7 @@
         <div class="card-body">
             <div>
             <img class="profile-image" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
-            <a href="{%url 'otherpage' post.id%}"><span style="font-size:14px; font-weight:bold">{{post.author.name}}</span></a>
+            <a href="{%url 'profile' post.author.id%}"><span style="font-size:14px; font-weight:bold">{{post.author.name}}</span></a>
             <span style="font-size:14px; font-weight:bold">({{post.author.major}} {{post.author.studentNum}})</span>
             <span style="font-size:11px;float:right">{{post.pub_date|date:'Y-m-d H:i'}}</span>
             </div>

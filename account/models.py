@@ -71,7 +71,7 @@ class CustomUser(AbstractUser):
     major = models.CharField(  #전공
         max_length=30,
         choices=MAJOR_IN_SCHOOL_CHOICES,
-        default='CS',
+        default='컴퓨터공학과',
     )
 
     STUDENT_NUM_CHOICES = [

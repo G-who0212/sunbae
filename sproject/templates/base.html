@@ -60,10 +60,11 @@
     <div class="container-fluid" >
       <div class="navbar-header" >
         <a class="navbar-brand"  href="{%url 'home'%}" >
-          <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" ></a>
+          <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px;"></a>
         
         {% if request.user.is_authenticated %}
         <form class="navbar-form navbar-left" role="search" action="" method="GET">
+          {%csrf_token%}
           <div class="form-group">
               <select name="type">
                   <option value="all">전체</option>
@@ -84,12 +85,11 @@
             <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
           </ul>
         </div>
-
+        {% endif %}
       </div>
     </div>
   </nav>
 </div>
-{% endif %}
 {% block content %}
 {% endblock %}
 </body>
