@@ -43,9 +43,9 @@
             {% with user_followers=user.followers.all %}
                 {%for myfollowers in user_followers %}
                 {% if myfollowers.profile_image %}
-                <img src="{{myfollowers.profile_image.url}}" alt="사진" width=100px height=100px> 
+                <img src="{{myfollowers.profile_image.url}}" alt="사진" width=50px height=50px> 
                 {% endif %}
-                {{myfollowers.name}} ({{myfollowers.major}}{{myfollowers.studentNum}})
+                <a href="{%url 'profile' myfollowers.id%}">{{myfollowers.name}} ({{myfollowers.major}}{{myfollowers.studentNum}})</a>
                    <br>
                    <br>
                    {%endfor%}

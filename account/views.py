@@ -79,6 +79,7 @@ def activate(request, uidb64, token):
         user_dic = jwt.decode(token, SECRET_KEY['secret'], SECRET_KEY['algorithm'])
         if user.id == user_dic["user"]:
             user.email_auth = True
+            user.save()
             login(request, user) 
             return redirect("home")
     

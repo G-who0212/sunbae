@@ -73,16 +73,11 @@
     <p id="id_image"><label for="id_image">이미지 수정 </label>
     <br>
     {%if postmodel.image %}
-
     <a href="{{MEDIA_URL}}{{postmodel.image.url}}" id="id_image">{{postmodel.image.name}}</a>
     <input type="checkbox" name="image-clear" id="image-clear_id">
     <p><label for="image-clear_id">이미지 삽입을 취소하려면 체크표를 눌러주세요.</p></label>
-
     {%endif%}
     <p id="id_image"><label for="id_image">이미지 변경</label> <input type="file" name="image" accept="image/*" id="id_image"></p>
-    <!--
-    {{post.image}}-->
-
     <div style="text-align: center"><button type="submit" class="button" > 수정하기 </button></div>
     </form>
 
