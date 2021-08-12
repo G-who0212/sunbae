@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
-
-<p style="text-align : center;">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</p>
-<a href="{%url 'login'%}" style="text-align : center;">로그인 화면</a>
+{% block content %}
+<h2><p style="text-align : center;">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</p></h2>
+<h2><a href="{%url 'login'%}" style="text-align : center;"> 로그인 화면</a></h2>
+{% endblock %}

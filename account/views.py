@@ -136,7 +136,7 @@ def otherpage(request, id):
     author = post.author
     aID = author.id
     customuser = get_object_or_404(CustomUser, pk=aID)
-    posts = Post.objects.filter(user=author).order_by('-pub_date')
+    posts = Post.objects.filter(author=author).order_by('-pub_date')
     careers = Career.objects.filter(user=author)
     univs = Univ.objects.filter(user=author)
     return render(request, 'otherprofile.html', {'customuser':customuser, 'posts':posts, 'careers':careers, 'univs':univs})
@@ -151,11 +151,12 @@ def change(request):
                 user = authenticate(request=request, username=username, password=password)
                 if user is not None:
                     return render(request, 'change.html')
+                else:
+                    return render(request, 'wrongIDorPW2.html')
             else:
-                return render(request, 'wrongIDorPW.html')   
+                return render(request, 'wrongIDorPW2.html')   
         else:
-             return render(request, 'wrongIDorPW.html')
-        return redirect("home")
+             return render(request, 'wrongIDorPW2.html')
     else:
         form = AuthenticationForm()
         return render(request, 'doubleCheck.html', {'form':form})
@@ -203,7 +204,7 @@ def career_edit(request, id):
 		    return redirect("home")
     else:
 	    form = CareerForm(instance=career)
-    return render(request, 'signUpCareer.html', {'form':form})
+    return render(request, 'changeCareer.html', {'form':form, 'career':career})
 
 def university_show(request):
     univs = Univ.objects.filter(user=request.user)
@@ -219,4 +220,4 @@ def university_edit(request, id):
 		    return redirect("home")
     else:
 	    form = UnivForm(instance=univ)
-    return render(request, 'signUpUniv.html', {'form':form})
+    return render(request, 'changeUniv.html', {'form':form, 'univ':univ})
