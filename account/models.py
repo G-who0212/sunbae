@@ -196,7 +196,7 @@ class Career(models.Model):
         blank=True, 
         null=True
     )
-	careerRoleAchievement = models.CharField(max_length=200, blank=True, null=True) #역할 / 성과
+
 
 
 
@@ -279,4 +279,4 @@ class Univ(models.Model):
         blank=True, 
         null=True
     )
-	university_RoleAchievement = models.CharField(max_length=200, blank=True, null=True) #역할 / 성과
+	
