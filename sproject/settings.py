@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import sproject.email_settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -119,6 +120,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'sproject', 'static')]
+#2. static파일들을 모을 위치를 지정해줌
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 #이용자가 업로드한 파일을 모으는 곳
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -129,3 +134,12 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 이메일 인증 관련 setting
+EMAIL_BACKEND = sproject.email_settings.EMAIL['EMAIL_BACKEND']
+EMAIL_USE_TLS = sproject.email_settings.EMAIL['EMAIL_USE_TLS']
+EMAIL_PORT = sproject.email_settings.EMAIL['EMAIL_PORT']
+EMAIL_HOST = sproject.email_settings.EMAIL['EMAIL_HOST']
+EMAIL_HOST_USER = sproject.email_settings.EMAIL['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = sproject.email_settings.EMAIL['EMAIL_HOST_PASSWORD']
+SERVER_EMAIL = sproject.email_settings.EMAIL['SERVER_EMAIL']

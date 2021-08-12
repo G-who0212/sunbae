@@ -60,6 +60,7 @@
     <br>
     <div id = "textbox">
     <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
             <div class="noprint">
             <input type="{%csrf_token%}" name="csrfmiddlewaretoken" value="JURujI2cQsww7K0BuYgMhmTBx7wIO0TkNhH64FFINvRzoViAfMD37tNWb3OuLju6" ></div>
             <p id="id_category"><label for="id_category">게시글 카테고리 : </label>{{post.category}}

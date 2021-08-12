@@ -1,11 +1,10 @@
 from account.models import CustomUser
 from django.shortcuts import get_object_or_404, render, redirect
 
-
 # Create your views here.
 
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm#, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout,get_user_model, update_session_auth_hash
 from django.contrib.auth import authenticate, login, logout
 from .forms import CareerForm, RegisterForm, UnivForm, ChangeForm
@@ -13,12 +12,18 @@ from post.forms import PostForm
 from post.models import Post
 from account.models import CustomUser, Career, Univ
 from django.contrib.auth.forms import PasswordChangeForm
+import jwt
+import json
+from sproject.email_settings import SECRET_KEY
+from .emailText import message
+from django.http import JsonResponse
+from django.core.exceptions import ValidationError
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes, force_text
 
 # Create your views here.
-def home(request):
-    return render(request, 'home.html')
-
-
 def login_view(request):
     if request.method == 'POST': 
         form = AuthenticationForm(request=request, data=request.POST)
@@ -28,9 +33,9 @@ def login_view(request):
             user = authenticate(request=request, username=username, password=password)
             if user is not None:
                 login(request, user)
+            return redirect("home")
         else:
              return render(request, 'wrongIDorPW.html')
-        return redirect("home")
     else:
         form = AuthenticationForm()
         return render(request, 'login.html', {'form':form})
@@ -47,7 +52,18 @@ def register_view(request):
         # form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save() 
-            login(request, user) 
+
+            current_site = get_current_site(request)
+            domain = current_site.domain
+            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+            token = jwt.encode({'user':user.id}, SECRET_KEY['secret'], SECRET_KEY['algorithm'])
+            message_data = message(domain, uidb64, token)
+
+            mail_title = "선배님 이메일 인증을 완료해주세요"
+            mail_to = user.schoolEmail
+            email = EmailMessage(mail_title, message_data, to=[mail_to])
+            email.send()
+
             return redirect("registerCareer")
         else:
             return render(request, 'invalid_password.html')
@@ -55,6 +71,23 @@ def register_view(request):
         form = RegisterForm()
         # form = UserCreationForm()
         return render(request, 'signup.html', {'form':form})
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = CustomUser.objects.get(pk=uid)
+        user_dic = jwt.decode(token, SECRET_KEY['secret'], SECRET_KEY['algorithm'])
+        if user.id == user_dic["user"]:
+            user.email_auth = True
+            login(request, user) 
+            return redirect("home")
+    
+        return JsonResponse({'message':'auth fail'}, status=400)
+    except ValidationError:
+        return JsonResponse({'message':'type_error'}, status=400)
+
+    except KeyError:
+        return JsonResponse({'message':'INVALID_KEY'}, status=400)
 
 def register_view_career(request):
     if request.method == "POST":
@@ -83,6 +116,8 @@ def register_view_univ(request):
         form = UnivForm()
         return render(request, 'signupUniv.html', {'form':form})        
 
+def signupComplete(request):
+    return render(request, 'signupComplete.html')
 
 def profile(request, id):
     user = get_object_or_404(CustomUser,pk=id)
@@ -120,23 +155,12 @@ def see_following(request,pk):
         return render(request,'myfollowing.html',{'user':request.user})
 
 
-
-def mypage(request):
-    if request.user.is_authenticated:
-        posts = Post.objects.filter(user=request.user).order_by('-pub_date')
-        careers = Career.objects.filter(user=request.user)
-        univs = Univ.objects.filter(user=request.user)
-        return render(request,'profile.html', {'posts':posts, 'careers':careers, 'univs':univs})
-    else:
-        return render(request, 'ifNotAuthenticated.html')
-
-
 def otherpage(request, id):
     post = get_object_or_404(Post, pk=id)
     author = post.author
     aID = author.id
     customuser = get_object_or_404(CustomUser, pk=aID)
-    posts = Post.objects.filter(user=author).order_by('-pub_date')
+    posts = Post.objects.filter(author=author).order_by('-pub_date')
     careers = Career.objects.filter(user=author)
     univs = Univ.objects.filter(user=author)
     return render(request, 'otherprofile.html', {'customuser':customuser, 'posts':posts, 'careers':careers, 'univs':univs})
@@ -151,11 +175,12 @@ def change(request):
                 user = authenticate(request=request, username=username, password=password)
                 if user is not None:
                     return render(request, 'change.html')
+                else:
+                    return render(request, 'wrongIDorPW2.html')
             else:
-                return render(request, 'wrongIDorPW.html')   
+                return render(request, 'wrongIDorPW2.html')   
         else:
-             return render(request, 'wrongIDorPW.html')
-        return redirect("home")
+             return render(request, 'wrongIDorPW2.html')
     else:
         form = AuthenticationForm()
         return render(request, 'doubleCheck.html', {'form':form})
@@ -203,7 +228,7 @@ def career_edit(request, id):
 		    return redirect("home")
     else:
 	    form = CareerForm(instance=career)
-    return render(request, 'signUpCareer.html', {'form':form})
+    return render(request, 'changeCareer.html', {'form':form, 'career':career})
 
 def university_show(request):
     univs = Univ.objects.filter(user=request.user)
@@ -219,4 +244,4 @@ def university_edit(request, id):
 		    return redirect("home")
     else:
 	    form = UnivForm(instance=univ)
-    return render(request, 'signUpUniv.html', {'form':form})
+    return render(request, 'changeUniv.html', {'form':form, 'univ':univ})

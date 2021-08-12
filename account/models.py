@@ -71,7 +71,7 @@ class CustomUser(AbstractUser):
     major = models.CharField(  #전공
         max_length=30,
         choices=MAJOR_IN_SCHOOL_CHOICES,
-        default='CS',
+        default='컴퓨터공학과',
     )
 
     STUDENT_NUM_CHOICES = [
@@ -107,7 +107,8 @@ class CustomUser(AbstractUser):
         default='서울캠퍼스'
     )
 
-    schoolEmail = models.CharField(max_length=50) #이메일
+    schoolEmail = models.EmailField(max_length=100) #이메일
+    email_auth = models.BooleanField(default=False) # 이메일 인증 여부
 
     #웹사이트
     websiteName = models.CharField(max_length=150, blank=True, null=True) #이름
@@ -167,6 +168,7 @@ class Career(models.Model):
         ('2019', '2019'),
         ('2020', '2020'),
         ('2021', '2021'),
+        ('재직중','재직중'),
     ]
 	careerYearEnd = models.CharField( #종료년
         max_length=10,
@@ -188,6 +190,7 @@ class Career(models.Model):
         ('10', '10'),
         ('11', '11'),
         ('12', '12'),
+        (' ','재직중')
     ]
 	careerMonthEnd = models.CharField( #종료 월 선택
         max_length=3,
@@ -250,6 +253,7 @@ class Univ(models.Model):
         ('2019', '2019'),
         ('2020', '2020'),
         ('2021', '2021'),
+        ('활동중','활동중'),
     ]
 	university_YearEnd = models.CharField( #종료 년
         max_length=10,
@@ -271,6 +275,7 @@ class Univ(models.Model):
         ('10', '10'),
         ('11', '11'),
         ('12', '12'),
+        (' ','활동중'),
     ]
 	university_MonthEnd = models.CharField( #종료 월
         max_length=3,

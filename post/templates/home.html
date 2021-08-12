@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+</head>
+
 <style>
     .custom-border {
         border: #5B9BD5 2px solid;
@@ -36,12 +40,19 @@
 </style>
 
 <div class="container">
+    {% if keyword %}
+        {% if not post_list %}
+        <h3>검색 결과가 없습니다.</h3>
+        {% else %}
+        <h3 class="mb-3">'{{keyword}}' 검색 결과입니다.</h3>
+        {% endif %}
+    {% endif %}
     {% for post in post_list %}
     <div class="card my-2 custom-border">
         <div class="card-body">
             <div>
             <img class="profile-image" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
-            <span style="font-size:14px; font-weight:bold">{{post.author.name}}</span>
+            <a href="{%url 'profile' post.author.id%}"><span style="font-size:14px; font-weight:bold">{{post.author.name}}</span></a>
             <span style="font-size:14px; font-weight:bold">({{post.author.major}} {{post.author.studentNum}})</span>
             <span style="font-size:11px;float:right">{{post.pub_date|date:'Y-m-d H:i'}}</span>
             </div>
@@ -49,6 +60,9 @@
                 <div class="custom-border" style="font-size:12px; padding:10px; margin-bottom:5px;">
                     <span id= "text_post">{{post.body}}</span>
                 </div>
+                {% if post.image %}
+                <img src="{{post.image.url}}" alt="사진" width="130px"height="100px"> <br>
+                {%endif%}
                 <span style="font-size:12px;float:right"><a href="{% url 'detail' post.id %}">글 자세히 보기</a></span>
                 <div id="id_category">
                     {{post.get_category_display}} <br></div>
@@ -79,9 +93,15 @@
     {% endfor %}
 </div>
 
+
+{% for message in messages %}
+<script type="text/javascript">
+    alert("키워드는 2글자 이상 입력해주세요.");
+</script>
+{% endfor %}
+
 <script type="text/javascript">
     function post_like(id) {
-        console.log("hi")
         $.ajax({
             url: "{%url 'likes'%}",
             data: {
@@ -102,5 +122,4 @@
         })
     }
 </script>
-
 {% endblock %}

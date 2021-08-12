@@ -45,7 +45,7 @@
         
 </style>
 
-{% if request.user.is_authenticated %}
+
 <div class="container h-150">
     <div class="row mb-3 p-3 custom-border">
         <img class="p-0 mb-2 profile-image" src="{{user.profile_image.url}}" alt="프로필 사진"><br>
@@ -129,22 +129,6 @@
                             {%endif%}
                             <span id="like_count">{{post.like.count}}</span>
                     </button>
-            
-
-                        <!--
-                    <p class="like">
-                        좋아요 <span id="like_count">{{post.like.count}}</span>명
-                        <button class="bg-transparent border-0" id="{{post.id}}" onclick="post_like(this.id)">
-                            {%if request.user in post.like.all%}
-                          
-                            <i id="heart" class="fas fa-heart"></i>
-                            {%else%}
-                         
-                            <i id="heart" class="far fa-heart"></i>
-                            {%endif%}
-                        </button>
-                    </p>
-                -->
                 </div>
             </div>
             {% endfor %}
@@ -154,7 +138,6 @@
 
 <script type="text/javascript">
     function post_like(id) {
-        console.log("hi")
         $.ajax({
             url: "{%url 'likes'%}",
             data: {
@@ -175,7 +158,4 @@
         })
     }
 </script>
-{% else %}
-<a href="{%url 'login'%}">로그인해주세요</a>
-{% endif %}
 {% endblock %}

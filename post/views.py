@@ -8,11 +8,36 @@ from .models import Post, Comment
 from .forms import PostForm
 from account.models import CustomUser
 from operator import itemgetter
+from django.contrib import messages
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
     if not request.user.is_authenticated:
         return redirect('login')
+    elif not request.user.email_auth:
+        return render(request, 'wait_activate.html')
+
+    
+    search_keyword = request.GET.get('keyword', '')
+    search_type = request.GET.get('type', '')
+    # 검색어를 입력했을 경우
+    if search_keyword:
+        post_list = Post.objects.order_by('-pub_date')
+        if len(search_keyword) > 1:
+            if search_type == 'all':
+                result_list = post_list.filter(Q (body__icontains=search_keyword) | Q (hashtag__icontains=search_keyword) | Q (author__name__icontains=search_keyword)).distinct()
+            elif search_type == 'content':
+                result_list = post_list.filter(body__icontains=search_keyword)
+            elif search_type == 'hashtag':
+                result_list = post_list.filter(hashtag__icontains=search_keyword)
+            elif search_type == 'author':
+                result_list = post_list.filter(author__name__icontains=search_keyword)
+            
+            return render(request, 'home.html', {'post_list':result_list, 'keyword': search_keyword})
+        else:
+            messages.error(request, '키워드는 2글자 이상 입력해주세요.')
+
     # 자신이 팔로우 한 사람들의 최신글 + 최신글을 20개까지 가져오기
     following_list = request.user.followings.all()
     post_list = []
@@ -31,7 +56,7 @@ def home(request):
         # 최신 20개 글만 가져오기
         post_list.sort(key=itemgetter('pub_date'), reverse=True)
         post_list = post_list[:20]
-        
+    
     return render(request, 'home.html', {'post_list':post_list})
 
 def new(request):
