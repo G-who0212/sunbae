@@ -44,6 +44,11 @@
           border-style : none;
         }
 
+        .menu {
+          font-size:7.5px;
+          font-style:normal;
+          color : black;
+        }
         #menubar ul li {
           
           display : inline;
@@ -55,13 +60,15 @@
 </head>
 <body>
   {% load static %}
-<div class="container" >
-  <nav class="navbar-default" id="nav1">
-    <div class="container-fluid" >
-      <div class="navbar-header" >
-        <a class="navbar-brand"  href="{%url 'home'%}" >
-          <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px;"></a>
+  <div class="container">
+    <div style="padding:auto; margin:auto;"><a class="navbar-brand"  href="{%url 'home'%}" >
+      <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px;"></a>
+    </div>
+
+    <nav class="navbar navbar-light bg-light" style='background-color:white !important'>
+      <div class="container-fluid" >
         
+          
         {% if request.user.is_authenticated %}
         <form class="navbar-form navbar-left" role="search" action="" method="GET">
           {%csrf_token%}
@@ -74,23 +81,23 @@
               </select>
               <input class="form-control me-2" name="keyword" value="{{ keyword|default_if_none:'' }}" type="search" placeholder="키워드를 입력하세요" aria-label="Search" style="width:150px; height:30px">
               <button id="searchbutton" type="submit"> 검색 </button>
-            </div>
+
+              <div id = "menubar">
+                <ul class="nav nav-right">
+                  <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
+                  <li><a class="navbar-brand" href="{%url 'profile' request.user.id %}">마이페이지</a></li>
+                  <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
+                </ul>      
+              </div>
           </div>
         </form>
-
-        <div id = "menubar">
-          <ul class="nav nav-right">
-            <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
-            <li><a class="navbar-brand" href="{%url 'profile' request.user.id %}">마이페이지</a></li>
-            <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
-          </ul>
-        </div>
-        {% endif %}
       </div>
-    </div>
-  </nav>
-</div>
-{% block content %}
-{% endblock %}
+    </nav>
+  </div>
+
 </body>
 </html>
+{% endif %}
+{% block content %}
+{% endblock %}
+
