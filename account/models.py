@@ -107,7 +107,8 @@ class CustomUser(AbstractUser):
         default='서울캠퍼스'
     )
 
-    schoolEmail = models.CharField(max_length=50) #이메일
+    schoolEmail = models.EmailField(max_length=100) #이메일
+    email_auth = models.BooleanField(default=False) # 이메일 인증 여부
 
     #웹사이트
     websiteName = models.CharField(max_length=150, blank=True, null=True) #이름

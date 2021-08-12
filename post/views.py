@@ -13,6 +13,8 @@ from operator import itemgetter
 def home(request):
     if not request.user.is_authenticated:
         return redirect('login')
+    elif not request.user.email_auth:
+        return render(request, 'wait_activate.html')
     # 자신이 팔로우 한 사람들의 최신글 + 최신글을 20개까지 가져오기
     following_list = request.user.followings.all()
     post_list = []
