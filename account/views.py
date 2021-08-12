@@ -80,7 +80,7 @@ def activate(request, uidb64, token):
         if user.id == user_dic["user"]:
             user.email_auth = True
             user.save()
-            login(request, user)
+            login(request, user) 
             return redirect("home")
     
         return JsonResponse({'message':'auth fail'}, status=400)

@@ -87,18 +87,20 @@
             <div style="float:left"><h4>{{post.author.name}}({{post.author.major}}{{post.author.studentNum}})</h4></div>
             <br>
             <br>
-            <div class = "container" id = "id_body">{{post.body}} <br></div>
+            <div class = "container" id = "id_body">
+                {% if post.image %}
+                <div id="id_image">
+                    <img src="{{post.image.url}}" alt="사진" width="130px"height="100px"><br>
+                </div>
+                {% endif %}
+                <br>
+                {{post.body}} <br></div>
             <div id="id_category">
             {{post.get_category_display}} <br></div>
             <div id="id_category">
             {{post.hashtag}} <br></div>
             <!--사진 html 추가-->
-            {% if post.image %}
-            <div id="id_image">
-                <img src="{{post.image.url}}" alt="사진" width="130px"height="100px"><br>
-            </div>
-            {% endif %}
-
+           
     
             {% if post.author == user %}
             <a href="{%url 'delete' post.id%}"><button class="btn btn-danger" style="float:right; margin-left:5px;">삭제</button></a>
