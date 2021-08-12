@@ -7,6 +7,7 @@ urlpatterns = [
     path('register/', register_view, name="register"),
     path('registerCareer/', register_view_career, name="registerCareer"),
     path('registerUniv/', register_view_univ, name="registerUniv"),
+    path('activate/<str:uidb64>/<str:token>', activate, name="active"),
     path('profile/<str:id>', profile, name="profile"),
     path('<int:pk>/follow/',follow, name="follow"),
     path('<int:pk>/see_follower/',see_follower, name="see_follower"),
