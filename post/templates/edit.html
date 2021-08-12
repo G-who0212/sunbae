@@ -1,12 +1,88 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container" style="text-align : center;">
-<h1>게시물 수정</h1>
-<form method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-    {{post.as_p}}
-    <button type="submit" class="button"> 수정하기 </button>
-</form>
-</div>
+
+<style>
+    .button {background-color : #5B9BD5; 
+             color: white; 
+             font-size: 13px;
+             border-radius: 5px;
+             padding: 5px 7.5px; 
+             margin: 5px 7.5px;
+             text-align : center;
+             border-style : none;
+             }
+    h1 {font-size:20px; 
+    font-weight:700; 
+    padding: 5px 7.6px;
+    margin: 5px 7.5px;
+    text-align : center;}
+
+    #textbox 
+    {
+        border : solid #5B9BD5;
+        padding : 20px 10px 10px 15px;
+        border-width:2px;
+    }
+    #id_category
+    {
+        font-size : 13px;
+    }
+    #id_body
+    {
+        font-size : 13px;
+        resize :none;
+        width : 100%
+    }
+    #id_image
+    {
+        font-size : 13px;
+    }
+    #id_image
+    {
+        font-size : 13px;
+    }
+
+    #id_hashtag
+    {
+        font-size : 13px;
+    }
+
+    .noprint
+    { display:none; }
+    
+
+</style>
+
+<div class = "container" style="text-align : left; margin-bottom: 50px;">
+    <h1>게시물 수정</h1>
+    <br>
+    <br>
+    <div id = "textbox">
+    <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+            <div class="noprint">
+            <input type="{%csrf_token%}" name="csrfmiddlewaretoken" value="JURujI2cQsww7K0BuYgMhmTBx7wIO0TkNhH64FFINvRzoViAfMD37tNWb3OuLju6" ></div>
+            <p id="id_category"><label for="id_category">게시글 카테고리 : </label>{{post.category}}
+
+    </select></p>
+
+    <p id="id_body"><label for="id_body">내용</label><br>{{post.body}}</p>
+
+    <p id="id_hashtag"><label for="id_hashtag">해시태그 : </label> {{post.hashtag}}</p>
+    <p id="id_image"><label for="id_image">이미지 수정 </label>
+    <br>
+    {%if postmodel.image %}
+
+    <a href="{{MEDIA_URL}}{{postmodel.image.url}}" id="id_image">{{postmodel.image.name}}</a>
+    <input type="checkbox" name="image-clear" id="image-clear_id">
+    <p><label for="image-clear_id">이미지 삽입을 취소하려면 체크표를 눌러주세요.</p></label>
+
+    {%endif%}
+    <p id="id_image"><label for="id_image">이미지 변경</label> <input type="file" name="image" accept="image/*" id="id_image"></p>
+    <!--
+    {{post.image}}-->
+
+    <div style="text-align: center"><button type="submit" class="button" > 수정하기 </button></div>
+    </form>
+
 {% endblock %} 

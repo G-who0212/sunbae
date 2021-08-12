@@ -61,7 +61,7 @@ def update(request, id):
             return redirect('home')
     else:
         form = PostForm(instance=post)
-        return render(request, 'edit.html', {'post':form})
+        return render(request, 'edit.html', {'post':form,'postmodel':post})
 
 def delete(request, id):
     delete_post = get_object_or_404(Post, pk = id)

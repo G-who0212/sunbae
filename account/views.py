@@ -141,7 +141,6 @@ def otherpage(request, id):
     univs = Univ.objects.filter(user=author)
     return render(request, 'otherprofile.html', {'customuser':customuser, 'posts':posts, 'careers':careers, 'univs':univs})
 
-
 def change(request):
     if request.method == 'POST': 
         form = AuthenticationForm(request=request, data=request.POST)
