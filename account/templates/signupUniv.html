@@ -6,7 +6,19 @@
     <br>
     <br>
     <style>
-        #univbutton2 { 
+        a {text-decoration-line:none;}
+
+        #univbutton1 { 
+            color: #5B9BD5; 
+            font-size: 5px;
+            border-radius: 5px;
+            padding: 5px 7.5px; 
+            margin: 2px 3px;
+            border-style : none;
+            background-color: white;
+        }
+
+        .univbutton2 { 
             color: white; 
             font-size: 5px;
             border-radius: 5px;
@@ -16,23 +28,16 @@
             background-color: #5B9BD5;
             }
         
-        #univbutton1 { 
-            color: #5B9BD5; 
-            font-size: 5px;
-            border-radius: 5px;
-            padding: 5px 7.5px; 
-            margin: 2px 3px;
-            border-style : none;
-            background-color: white;
-            }
+        .univbutton2:hover {text-decoration-line:none; color: white;}
     </style>
-
     <form action="{% url 'registerUniv' %}" method="post">
         {%csrf_token%}
         {{form.as_p}}
         <br>
         <button type="submit" id="univbutton1"> 경력 추가하기 </button> 
-        <button type="button" id="univbutton2" onclick="location.href='registerUniv'">회원가입</button>
+        <a href="{% url 'signupComplete.html' %}" class="univbutton2">회원가입</a> 
+        <!-- 링크 연결 안되는데 어떻게 하지..? -->
+
     </form>
 </div>
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<a href="{%url 'home'%}">홈화면</a>
+<!-- <a href="{%url 'home'%}">홈화면</a> -->
 {% if user.is_authenticated %}
 <div class = "container">
-    <h1>
+    <h1><strong>
         {% if user.image %}
         <img src="{{user.image.url}}" alt="사진"> 
         {% endif %}
-        {{user.name}}({{user.major}}{{user.studentNum}})</h1>
+        {{user.name}}({{user.major}}{{user.studentNum}})</strong></h1>
         <br>
         팔로우 : {{user.followers}} 팔로잉 : {{user.following}}
         {% endif %}

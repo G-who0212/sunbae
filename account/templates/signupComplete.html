@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+<style>
+    #wrapper {display: table;}
+    #cell {display:table-cell; vertical-align: middle; text-align: center;} 
+    
+    .welcome {
+        text-align: center;
+        
+    }
+</style>
+
+<div id="wrapper">
+    <div id="cell"> 
+        <p class='welcome'>환영합니다!</p>
+        <a href="{%url 'login'%}" style="text-align : center;">로그인 화면</a>
+    </div>
+</div>
