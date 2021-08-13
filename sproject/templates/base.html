@@ -104,40 +104,43 @@
           position:absolute;
           right:340px;
           top:15px;
+        }
 
+        .brand {
+          width: 120px;
+          margin-top: 2%;
+          margin-left: 10%;
         }
   </style>
 </head>
 <body>
-  <div class="container">
-    <nav class="navbar">
-      <div class="container-fluid">
-        <div class="navbar-header navbar-left" >
-          <a class="navbar-brand" href="{%url 'home'%}" style="float:left">
-            <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px; position:absolute; top:7px; left:5px;" >
-          </a>
-        </div>
+        <a href="{%url 'home'%}">
+          <img class="brand" alt="Brand" src="{% static 'sunbaenim.PNG' %}">
+        </a>
         {% if request.user.is_authenticated and request.user.email_auth%}
+        <nav class="navbar">
+          <div class="container-fluid">
+            <div class="navbar-header navbar-left" >
         <form class="navbar-form navbar-right" role="search" action="{% url 'home' %}" method="GET">
           {%csrf_token%}
           <div class="form-group">
-              <select name="type" id="select1">
-                  <option value="all">&nbsp;전체</option>
-                  <option value="content">&nbsp;내용</option>
-                  <option value="hashtag">&nbsp;해시태그</option>
-                  <option value="author">작성자</option>
-              </select>
-              <input id="keywordbox" name="keyword" value="{{ keyword|default_if_none:'' }}" type="search" placeholder="키워드를 입력하세요" aria-label="Search">
-              <button id="searchbutton" type="submit">검색</button>
-            </form>
-                <ul class="nav nav-tab navbar-right" id="menubar">
-                  <li role="presentation"><a href="{%url 'new'%}" class="menubardetail">게시물 작성</a></li>
-                  <li role="presentation"><a href="{%url 'profile' request.user.id %}" class="menubardetail">마이페이지</a></li>
-                  <li role="presentation"><a href="{%url 'logout'%}" class="menubardetail">로그아웃</a></li>
-                </ul>
-          
-      </div>
-    </nav>
+            <select name="type" id="select1">
+                <option value="all">&nbsp;전체</option>
+                <option value="content">&nbsp;내용</option>
+                <option value="hashtag">&nbsp;해시태그</option>
+                <option value="author">작성자</option>
+            </select>
+            <input id="keywordbox" name="keyword" value="{{ keyword|default_if_none:'' }}" type="search" placeholder="키워드를 입력하세요" aria-label="Search">
+            <button id="searchbutton" type="submit">검색</button>
+          </div>
+        </form>
+            <ul class="nav nav-tab navbar-right" id="menubar">
+              <li role="presentation"><a href="{%url 'new'%}" class="menubardetail">게시물 작성</a></li>
+              <li role="presentation"><a href="{%url 'profile' request.user.id %}" class="menubardetail">마이페이지</a></li>
+              <li role="presentation"><a href="{%url 'logout'%}" class="menubardetail">로그아웃</a></li>
+            </ul>
+          </div>
+        </nav>
   </div>
 
 </body>

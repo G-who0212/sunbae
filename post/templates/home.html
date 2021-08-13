@@ -30,12 +30,23 @@
         
     .feeling_a {
         background-color: #fff;
+        border: 0px;
         color: #5B9BD5;
         font-size:13px;
         float:right;
         margin-left:5px;
-        border-radius: 4px;
         }  
+        
+    .btn-normal {
+        color: white; 
+        background-color: #5B9BD5;
+        font-size: 5px;
+        border-radius: 5px;
+        padding: 5px 7.5px; 
+        margin: 2px 3px;
+        border-style : none;
+        text-align: center;
+    }
 </style>
 
 <div class="container">
@@ -68,7 +79,7 @@
                     <div id="id_category">
                     {{post.hashtag}} <br></div>
 
-                <a href="{%url 'detail' post.id%}"><button type="button" class="btn btn-primary" style="float:right; margin-left:5px;">댓글달기</button></a>
+                <a href="{%url 'detail' post.id%}"><button type="button" class="btn-normal" style="float:right; margin-left:5px;">댓글달기</button></a>
 
                 <button id="{{post.id}}" class="feeling_a" onclick="post_like(this.id)">
                     {%if request.user in post.like.all%}
