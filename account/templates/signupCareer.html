@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class = "container" style="text-align : center;">
+    <h1><strong>커리어 정보 입력</strong></h1>
+    <br>
+    <br>
+    <style>
+        a {text-decoration-line:none;}
+
+        #careerbutton1 { 
+            color: #5B9BD5; 
+            font-size: 5px;
+            border-radius: 5px;
+            padding: 5px 7.5px; 
+            margin: 2px 3px;
+            border-style : none;
+            background-color: white;
+        }
+
+        .careerbutton2 { 
+            color: white; 
+            font-size: 5px;
+            border-radius: 5px;
+            padding: 5px 7.5px; 
+            margin: 2px 3px;
+            border-style : none;
+            background-color: #5B9BD5;
+            }
+        
+        .careerbutton2:hover {text-decoration-line:none; color: white;}
+    </style>
+
+    <form action="{% url 'registerCareer' %}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" id="careerbutton1"> 경력 추가하기 </button> 
+        <a href="{% url 'registerUniv' %}" class="careerbutton2">추가할 내용이 없으면</a>
+        <!-- <button type="button" id="careerbutton2" onClick="location.href='registerUniv'"> 추가할 내용이 없으면 </button>         -->
+    </form>
+    
+    <br>
+</div>
+{% endblock %}
+

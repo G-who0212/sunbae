@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    #changecareerbutton
+    {
+        background-color : #5B9BD5; 
+        color: white; 
+        font-size: 7.5px;
+        text-align : center;
+        width:50px; height:30px;
+        border-radius: 5px;
+        border-style : none;
+        text-align: center;
+    }
+</style>
+<br>
+<h1 style="text-align: center;">커리어 수정</h1>
+
+<form action="{% url 'careerEdit' career.id%}" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button style="text-align: center"type="submit" id="changecareerbutton"> 제출 </button> 
+</form>
+{% endblock %}

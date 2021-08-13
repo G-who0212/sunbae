@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    a {
+        font-size:13px;
+        font-style:inherit;
+        text-decoration-line: none;
+        color : #5B9BD5;
+    }
+</style>
+<h1 style="text-align: center;">수정 페이지</h1>
+<p style="text-align:center">
+<a href="{%url 'changeInfo'%}">&nbsp;회원정보 수정&nbsp;</a>
+<a href="{%url 'changePW'%}">&nbsp;비밀번호 수정&nbsp;</a>
+<a href="{%url 'registerCareer2' %}">&nbsp;커리어 추가&nbsp;</a>
+<a href="{%url 'registerUniv2' %}">&nbsp;대학생 활동 추가&nbsp;</a>
+<a href="{%url 'withdraw'%}">&nbsp;회원 탈퇴&nbsp;</a>
+<a href="{%url 'careerShow' %}">&nbsp;커리어 수정&nbsp;</a>
+<a href="{%url 'univShow' %}">&nbsp;대학생 활동 수정&nbsp;</a>
+</p>
+{% endblock %}

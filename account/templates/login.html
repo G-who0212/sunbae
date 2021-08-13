@@ -1,11 +1,51 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Login</h1>
 
-<form action="{% url 'login' %}" method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <button type="submit"> submit </button> 
-</form>
+<style>
+    /* #wrapper1 {position:absolute;display: table; } */
+    #cell1 {display:table-cell; vertical-align: middle; text-align: center;}
+    
+    #loginbutton { 
+        color: white; 
+        font-size: 5px;
+        border-radius: 5px;
+        padding: 5px 7.5px; 
+        margin: 2px 3px;
+        border-style : none;
+        background-color: #5B9BD5;
+        }
+
+    .loginbutton2 {
+        color: #5B9BD5; 
+        font-size: 5px;
+        padding: 7px 2px; 
+        margin: 4px 2px;
+        border-style : none;
+        background-color: white;  
+    }
+</style>
+
+<!-- <div id = "wrapper1" style=> -->
+    <div class = "container" id="cell1">
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3 style='text-align:center'>학교 동문에게 커리어를 묻다</h3>
+    <h1 style="font-size : 40px"><strong>선배님</strong></h1>
+    <br>
+    
+
+    <form action="{% url 'login' %}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" id = "loginbutton"> 로그인 </button> 
+    </form>
+    &nbsp; &nbsp; &nbsp;
+    <a href="{% url 'register' %}"><button class='loginbutton2'>회원가입</button></a>
+    <a href="#"><button class='loginbutton2'>아이디/비밀번호 찾기</button></a>
+    </div>
+
+
 {% endblock %}

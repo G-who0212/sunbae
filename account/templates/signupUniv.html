@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class = "container" style="text-align : center;">
+    <h1><strong>대학생 활동 입력</strong></h1>
+    <br>
+    <br>
+    <style>
+        a {text-decoration-line:none;}
+
+        #univbutton1 { 
+            color: #5B9BD5; 
+            font-size: 5px;
+            border-radius: 5px;
+            padding: 5px 7.5px; 
+            margin: 2px 3px;
+            border-style : none;
+            background-color: white;
+        }
+
+        .univbutton2 { 
+            color: white; 
+            font-size: 5px;
+            border-radius: 5px;
+            padding: 5px 7.5px; 
+            margin: 2px 3px;
+            border-style : none;
+            background-color: #5B9BD5;
+            }
+        
+        .univbutton2:hover {text-decoration-line:none; color: white;}
+    </style>
+    <form action="{% url 'registerUniv' %}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <br>
+        <button type="submit" id="univbutton1"> 경력 추가하기 </button> 
+        <a href="{% url 'signupComplete' %}" class="univbutton2">추가할 내용이 없으면 완료</a> 
+        <!-- 링크 연결 안되는데 어떻게 하지..? -->
+
+    </form>
+</div>
+{% endblock %}
