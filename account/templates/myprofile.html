@@ -34,7 +34,7 @@
         <br>
         {% for post in posts %}
             <div>
-                {{post.body}}
+                {{post.body|linebreaks}}
                 <br>
                 {{post.category}}
                 <br>

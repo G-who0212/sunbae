@@ -68,7 +68,7 @@
             </div>
             <div class="mt-3">
                 <div class="custom-border" style="font-size:12px; padding:10px; margin-bottom:5px;">
-                    <span id= "text_post">{{post.body}}</span>
+                    <span id= "text_post">{{post.body|linebreaks}}</span>
                 </div>
                 {% if post.image %}
                 <img src="{{post.image.url}}" alt="사진" width="130px"height="100px"> <br>

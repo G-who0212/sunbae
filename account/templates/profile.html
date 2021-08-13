@@ -120,7 +120,7 @@
                     {% endif %}
 
                     <div style="font-size:12px; padding:10px; margin-bottom:5px;">
-                        <span id= "text_post">{{post.body}}</span>
+                        <span id= "text_post">{{post.body|linebreaks}}</span>
                     </div>
                     <p style="float:right; font-size:12px"><a href="{% url 'detail' post.id %}">자세히 보기</a></p>
                     <div id="id_category">
