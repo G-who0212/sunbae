@@ -16,9 +16,18 @@
     margin: 2px 3px;
     border-style : none;
     }
+
+    #id_profile_image {
+        display: inline;
+    }
+
+    ul {
+        text-align: left;
+        display: inline-block;
+    }
 </style>
 
-<div class = "container" text-align:>
+<div class = "container text-center">
 <h1>회원가입</h1>
 
 <form action="{% url 'register' %}" method="post" enctype="multipart/form-data">

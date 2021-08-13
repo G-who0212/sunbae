@@ -3,8 +3,8 @@
 {% block content %}
 
 <style>
-        .changeunivbutton { 
-            background-color : #5B9BD5; 
+    .changeunivbutton { 
+        background-color : #5B9BD5; 
         color: white; 
         font-size: 7.5px;
         text-align : center;
@@ -14,11 +14,14 @@
         text-align: center;
     }
 </style>
-<h1 style="text-align: center">대학생 활동 수정</h1>
 
-<form action="{% url 'univEdit' univ.id%}" method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <button type="submit" class='changeunivbutton'> 제출 </button> 
-</form>
+<div class = "container text-center">
+    <h1 style="text-align: center">대학생 활동 수정</h1>
+
+    <form action="{% url 'univEdit' univ.id%}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" class='changeunivbutton'> 제출 </button> 
+    </form>
+</div>
 {% endblock %}

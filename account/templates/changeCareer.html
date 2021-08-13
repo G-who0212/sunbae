@@ -16,11 +16,13 @@
     }
 </style>
 <br>
-<h1 style="text-align: center;">커리어 수정</h1>
+<div class = "container text-center">
+    <h1 style="text-align: center;">커리어 수정</h1>
 
-<form action="{% url 'careerEdit' career.id%}" method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <button style="text-align: center"type="submit" id="changecareerbutton"> 제출 </button> 
-</form>
+    <form action="{% url 'careerEdit' career.id%}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button style="text-align: center"type="submit" id="changecareerbutton"> 제출 </button> 
+    </form>
+</div>
 {% endblock %}
