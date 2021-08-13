@@ -7,8 +7,8 @@
 
 <style>
     .custom-border {
-        border: #5B9BD5 2px solid;
-    }
+        border : 2px solid rgba(91,155,213,0.5);
+        border-radius : 6px;     }
 
     .profile-image {
         width: 50px;
@@ -30,13 +30,23 @@
         
     .feeling_a {
         background-color: #fff;
-        border: 2px solid #2199e8;
-        border-radius: 2px;
-        color: #2199e8;
+        border: 0px;
+        color: #5B9BD5;
         font-size:13px;
         float:right;
         margin-left:5px;
         }  
+        
+    .btn-normal {
+        color: white; 
+        background-color: #5B9BD5;
+        font-size: 5px;
+        border-radius: 5px;
+        padding: 5px 7.5px; 
+        margin: 2px 3px;
+        border-style : none;
+        text-align: center;
+    }
 </style>
 
 <div class="container">
@@ -51,7 +61,7 @@
     <div class="card my-2 custom-border">
         <div class="card-body">
             <div>
-            <img class="profile-image" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
+            <img class="profile-image me-2" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
             <a href="{%url 'profile' post.author.id%}"><span style="font-size:14px; font-weight:bold">{{post.author.name}}</span></a>
             <span style="font-size:14px; font-weight:bold">({{post.author.major}} {{post.author.studentNum}})</span>
             <span style="font-size:11px;float:right">{{post.pub_date|date:'Y-m-d H:i'}}</span>
@@ -68,11 +78,8 @@
                     {{post.get_category_display}} <br></div>
                     <div id="id_category">
                     {{post.hashtag}} <br></div>
-                <p class="like" style="font-size:12px;">
-                    좋아요 <span id="like_count">{{post.like.count}}</span>명
-                </p>
 
-                <a href="{%url 'detail' post.id%}"><button type="button" class="btn btn-primary" style="float:right; margin-left:5px;">댓글달기</button></a>
+                <a href="{%url 'detail' post.id%}"><button type="button" class="btn-normal" style="float:right; margin-left:5px;">댓글달기</button></a>
 
                 <button id="{{post.id}}" class="feeling_a" onclick="post_like(this.id)">
                     {%if request.user in post.like.all%}

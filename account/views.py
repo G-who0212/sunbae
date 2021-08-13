@@ -52,10 +52,11 @@ def register_view(request):
         # form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save() 
-
+            login(request, user)
+            
             current_site = get_current_site(request)
             domain = current_site.domain
-            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+            uidb64 = urlsafe_base64_encode(force_bytes(user.id))
             token = jwt.encode({'user':user.id}, SECRET_KEY['secret'], SECRET_KEY['algorithm'])
             message_data = message(domain, uidb64, token)
 
@@ -103,6 +104,21 @@ def register_view_career(request):
         form = CareerForm()
         return render(request, 'signupCareer.html', {'form':form})
 
+def register_view_career2(request):
+    if request.method == "POST":
+        form = CareerForm(request.POST)
+        if form.is_valid():
+            career = form.save(commit=False)
+            if request.user.is_authenticated:
+                career.user = request.user 
+                career = form.save()
+        return redirect("registerCareer2")
+    else:
+        form = CareerForm()
+        return render(request, 'signupCareer2.html', {'form':form})
+        
+def go_change(request):
+    return render(request, "change.html")
 
 def register_view_univ(request):
     if request.method == "POST":
@@ -115,7 +131,20 @@ def register_view_univ(request):
         return redirect("registerUniv")
     else:
         form = UnivForm()
-        return render(request, 'signupUniv.html', {'form':form})        
+        return render(request, 'signupUniv.html', {'form':form})  
+        
+def register_view_univ2(request):
+    if request.method == "POST":
+        form = UnivForm(request.POST)
+        if form.is_valid():
+            univ = form.save(commit=False)
+            if request.user.is_authenticated:
+                univ.user = request.user 
+                univ = form.save()
+        return redirect("registerUniv2")
+    else:
+        form = UnivForm()
+        return render(request, 'signupUniv2.html', {'form':form})      
 
 def signupComplete(request):
     return render(request, 'signupComplete.html')

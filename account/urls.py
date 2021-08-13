@@ -6,7 +6,9 @@ urlpatterns = [
     path('logout/', logout_view, name="logout"),
     path('register/', register_view, name="register"),
     path('registerCareer/', register_view_career, name="registerCareer"),
+    path('registerCareer2/', register_view_career2, name="registerCareer2"),
     path('registerUniv/', register_view_univ, name="registerUniv"),
+    path('registerUniv2/', register_view_univ2, name="registerUniv2"),
     path('signupComplete/', signupComplete, name="signupComplete"),
     path('activate/<str:uidb64>/<str:token>', activate, name="activate"),
     path('profile/<str:id>', profile, name="profile"),
@@ -22,4 +24,5 @@ urlpatterns = [
     path('careerShow/', career_show, name="careerShow"),
     path('univEdit/<str:id>', university_edit, name="univEdit"),
     path('univShow/', university_show, name="univShow"),
+    path('goChange/', go_change, name="goChange"),
 ]
