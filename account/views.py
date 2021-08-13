@@ -52,7 +52,8 @@ def register_view(request):
         # form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save() 
-
+            login(request, user)
+            
             current_site = get_current_site(request)
             domain = current_site.domain
             uidb64 = urlsafe_base64_encode(force_bytes(user.id))
