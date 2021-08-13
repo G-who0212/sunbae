@@ -20,19 +20,46 @@
 
     #textbox 
     {
-        border : solid #5B9BD5;
+        border : 2px solid rgba(91,155,213,0.5);
         padding : 20px 10px 10px 15px;
         border-width:2px;
+        border-radius : 6px; 
+
     }
     #id_category
     {
         font-size : 13px;
+        font-family: inherit;
+        position : relative;
+        border : 1px solid rgba(200,200,200,2);
+        border-radius : 4px; 
+        position:absolute;
+
+          
     }
+    #id_category:hover
+    {
+        border : 2.5px solid rgba(91,155,213,0.5);
+        border-radius : 4px; 
+        
+    }
+
     #id_body
     {
         font-size : 13px;
         resize :none;
-        width : 100%
+        width : 100%;
+        font-family: inherit;
+        border : 2px solid rgba(200,200,200,5);
+        border-radius : 4px; 
+    }
+
+    #id_body:hover
+    {
+        border : 2.5px solid rgba(91,155,213,0.5);
+        border-radius : 4px; 
+    }
+
     }
     #id_image
     {
@@ -41,30 +68,40 @@
     #id_image
     {
         font-size : 13px;
+        
     }
 
     #id_hashtag
     {
         font-size : 13px;
+        border : 2px solid rgba(200,200,200,5);
+        border-radius : 4px; 
+        position:absolute;
     }
+    #id_hashtag:hover
+    {
+        border : 2.5px solid rgba(91,155,213,0.5);
+        border-radius : 4px;
+    }
+
 
     .noprint
     { display:none; }
+    
     
 
 </style>
 
 <div class = "container" style="text-align : left; margin-bottom: 50px;">
-    <h1>게시물 업로드</h1>
-    <br>
+    <h2 style="text-align: center;"><strong>게시물 업로드</strong></h2>
     <br>
     <div id = "textbox">
     <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="noprint">
             <input type="{%csrf_token%}" name="csrfmiddlewaretoken" value="JURujI2cQsww7K0BuYgMhmTBx7wIO0TkNhH64FFINvRzoViAfMD37tNWb3OuLju6" ></div>
-            <p id="id_category"><label for="id_category">게시글 카테고리 : </label> <select name="category" id="id_category">
-                <option value="management">총무 및 사무</option>
+            <p style="font-size:13px"><label for="id_category">게시글 카테고리&nbsp;&nbsp;&nbsp;&nbsp;</label> <select name="category" id="id_category">
+                <option value="management" class='option1'>총무 및 사무</option>
                 <option value="business">영업</option>
                 <option value="PerDepart">인사</option>
                 <option value="customerC">고객상담</option>
@@ -87,10 +124,10 @@
 
     </select></p>
 
-    <p id="id_body"><label for="id_body">내용</label><br> 
+    <p style="font-size:13px"><label for="id_body">내용</label><br> 
     <textarea name="body" rows="10" required id="id_body"></textarea></p>
 
-    <p id="id_hashtag"><label for="id_hashtag">해시태그 : </label> <input type="text" name="hashtag" maxlength="50" required id="id_hashtag" placeholder="#을 붙여 입력하세요"></p>
+    <p style="font-size:13px"><label for="id_hashtag">해시태그&nbsp;&nbsp;:&nbsp;&nbsp;</label> <input type="text" name="hashtag" maxlength="50" required id="id_hashtag" placeholder="#을 붙여 입력하세요"></p>
 
     <p id="id_image"><label for="id_image">이미지 삽입</label> <input type="file" name="image" accept="image/*" id="id_image"></p>
     <div style="text-align: center"><button type="submit" class="button" >게시글 업로드 </button></div>

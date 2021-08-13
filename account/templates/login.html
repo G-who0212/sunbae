@@ -3,8 +3,8 @@
 {% block content %}
 
 <style>
-    #wrapper1 {display: table; }
-    #cell1 {display:table-cell; vertical-align: middle; text-align: center;} 
+    /* #wrapper1 {position:absolute;display: table; } */
+    #cell1 {display:table-cell; vertical-align: middle; text-align: center;}
     
     #loginbutton { 
         color: white; 
@@ -26,15 +26,13 @@
     }
 </style>
 
-<div id = "wrapper1">
+<!-- <div id = "wrapper1" style=> -->
     <div class = "container" id="cell1">
     <br>
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <h3>학교 동문에게 커리어를 묻다</h3>
+    <h3 style='text-align:center'>학교 동문에게 커리어를 묻다</h3>
     <h1 style="font-size : 40px"><strong>선배님</strong></h1>
     <br>
     
@@ -48,6 +46,6 @@
     <a href="{% url 'register' %}"><button class='loginbutton2'>회원가입</button></a>
     <a href="#"><button class='loginbutton2'>아이디/비밀번호 찾기</button></a>
     </div>
-</div>
+
 
 {% endblock %}
