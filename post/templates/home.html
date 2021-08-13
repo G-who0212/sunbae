@@ -51,7 +51,7 @@
     <div class="card my-2 custom-border">
         <div class="card-body">
             <div>
-            <img class="profile-image" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
+            <img class="profile-image me-2" src="{{ post.author.profile_image.url }}" alt="프로필 사진">
             <a href="{%url 'profile' post.author.id%}"><span style="font-size:14px; font-weight:bold">{{post.author.name}}</span></a>
             <span style="font-size:14px; font-weight:bold">({{post.author.major}} {{post.author.studentNum}})</span>
             <span style="font-size:11px;float:right">{{post.pub_date|date:'Y-m-d H:i'}}</span>
