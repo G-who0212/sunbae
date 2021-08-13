@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    #wrapper2 {display: table;}
-    #cell2 {display:table-cell; vertical-align: middle; text-align: center;} 
     a {text-decoration-line:none;}
 
     #gologinbutton { 
@@ -16,12 +14,11 @@
         }
 </style>
 
-<div id="wrapper2">
-    <div id="cell2"> 
-        <p style="text-align : center;">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</p>
-        <br>
-        <a href="{%url 'login'%}" id='gologinbutton';>로그인 화면</a>
-    </div>
+<div class = "container text-center">
+    <br>
+    <p style="text-align : center;">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</p>
+    <br>
+    <a href="{%url 'login'%}" id='gologinbutton';>로그인 화면</a>
 </div>
 
 {% endblock %}

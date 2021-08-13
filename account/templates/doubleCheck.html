@@ -3,7 +3,7 @@
 {% block content %}
 
 <style>
-        .doublecheckbutton { 
+    .doublecheckbutton { 
             background-color : #5B9BD5; 
         color: white; 
         font-size: 7.5px;
@@ -13,17 +13,15 @@
         border-style : none;
         text-align: center;
     }
-
-    #cell2 {display:table-cell; vertical-align: middle; text-align: center;}
-
 </style>
-<div class = "container" id="cell2">
-<h3 style="text-align: center">아이디 및 비밀번호 재확인</h3>
-<br>
-<form action="{% url 'change' %}" method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <button type="submit" class="doublecheckbutton"> 로그인 </button> 
-</form>
+<div class = "container text-center">
+    <br>
+    <h3 style="text-align: center">아이디 및 비밀번호 재확인</h3>
+    <br>
+    <form action="{% url 'change' %}" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" class="doublecheckbutton"> 로그인 </button> 
+    </form>
 </div>
 {% endblock %}
