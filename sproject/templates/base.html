@@ -118,7 +118,7 @@
           </a>
         </div>
         {% if request.user.is_authenticated and request.user.email_auth%}
-        <form class="navbar-form navbar-right" role="search" action="" method="GET">
+        <form class="navbar-form navbar-right" role="search" action="{% url 'home' %}" method="GET">
           {%csrf_token%}
           <div class="form-group">
               <select name="type" id="select1">
