@@ -34,16 +34,26 @@
             font-size:11px;
             margin-bottom: 5px;
         }
-    .feeling_a 
-    {
+
+    .feeling_a {
         background-color: #fff;
-        border : 2px solid rgba(91,155,213,0.5);
-        border-radius: 2px;
+        border: 0px;
+        color: #5B9BD5;
         font-size:13px;
         float:right;
         margin-left:5px;
+    }
+
+    .btn-normal {
+        color: white; 
+        background-color: #5B9BD5;
+        font-size: 5px;
+        border-radius: 5px;
+        padding: 5px 7.5px; 
+        margin: 2px 3px;
+        border-style : none;
+        text-align: center;
     }  
-        
 </style>
 
 
@@ -104,8 +114,8 @@
                 <div class="card-body">
                     {% if request.user == user %}
                     <div class="mb-1 d-flex justify-content-end">
-                        <a href="{% url 'update' post.id %}"><button class="me-2 btn btn-secondary btn-sm">수정</button></a>
-                        <a href="{% url 'delete' post.id %}"><button class="btn btn-danger btn-sm">삭제</button></a>
+                        <a href="{% url 'update' post.id %}"><button class="me-2 btn-normal">수정</button></a>
+                        <a href="{% url 'delete' post.id %}"><button class="btn-normal" style='background-color : red'>삭제</button></a>
                     </div>
                     {% endif %}
 
@@ -118,17 +128,17 @@
                         <div id="id_category">
                         {{post.hashtag}} <br></div>
 
-                    <a href="{%url 'detail' post.id%}"><button type="button" class="btn btn-primary" style="float:right; margin-left:5px;font-size:12px;">댓글달기</button></a>
+                    <a href="{%url 'detail' post.id%}"><button type="button" class="btn-normal" style="float:right; margin-left:5px;font-size:12px;">댓글달기</button></a>
 
                         <button id="{{post.id}}" class="feeling_a" onclick="post_like(this.id)">
                             {%if request.user in post.like.all%}
                             <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
-                            <i id="heart" class="fas fa-heart"></i>
+                            <i class="fas fa-heart heart {{post.id}}"></i>
                             {%else%}
                             <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
-                            <i id="heart" class="far fa-heart"></i>
+                            <i class="far fa-heart heart {{post.id}}"></i>
                             {%endif%}
-                            <span id="like_count">{{post.like.count}}</span>
+                            <span class="like_count {{post.id}}">{{post.like.count}}</span>
                     </button>
                 </div>
             </div>
@@ -146,14 +156,13 @@
             },
             dataType: "json",
             success: function (response) {
-                $('#like_count').html(response.like_count)
-                $('#message').html(response.message)
+                $('.like_count' + '.' + id).html(response.like_count)
                 if (response.message == "좋아요")
                 {
-                    $('#heart').attr("class", "fas fa-heart")
+                    $('.heart' + '.' + id).attr("class", "fas fa-heart heart " + id)
                 } else if (response.message == "좋아요 취소")
                 {
-                    $('#heart').attr("class", "far fa-heart")
+                    $('.heart' + '.' + id).attr("class", "far fa-heart heart " + id)
                 }
             }
         })
