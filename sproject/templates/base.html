@@ -42,54 +42,99 @@
           width:50px; height:30px;
           border-radius: 5px;
           border-style : none;
+          position:absolute;
+          right:285px;
+          top:15px;
         }
 
-        .menu {
-          font-size:7.5px;
-          font-style:normal;
-          color : black;
+        #menubar {
+          height:50px;
+          width:300x;
+          list-style-type: none;
+          margin: 1px 2px;
+          padding: 1px 2px;
+          position:absolute;
+          right:50px;
+          top:15px;
+          /* margin-left:10px;
+          padding-left:10px; */
+          
         }
-        #menubar ul li {
+
+        #menubar li {
           
           display : inline;
           text-align: center;
-          line-height: 10%;
-          height:10%;
+          line-height: 20%;
+          height:20%;
+          /* margin-left:10px;
+          padding-left:10px; */
+          
+         
+        }
+        
+        .menubardetail {
+          text-decoration-line: none;
+          color : #5B9BD5;
+
+        }
+
+        #select1 {
+          width: 55px;
+          height: 30px;
+          font-family: inherit;
+          color: #5B9BD5;
+          position : relative;
+          border-color: #5B9BD5;
+          border-width:medium;
+          border-radius : 4px;
+          position:absolute;
+          right:495px;
+          top:15px;
+        }
+        #keywordbox {
+          border-color:white;;
+          border-width:none;
+          font-family:inherit;
+          width:150px;
+          height:30px;
+          border-style:none;
+          position:absolute;
+          right:340px;
+          top:15px;
+
         }
   </style>
 </head>
 <body>
   {% load static %}
   <div class="container">
-    <div style="padding:auto; margin:auto;"><a class="navbar-brand"  href="{%url 'home'%}" >
-      <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px;"></a>
-    </div>
-
-    <nav class="navbar navbar-light bg-light" style='background-color:white !important'>
-      <div class="container-fluid" >
-        
+    <nav class="navbar">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-left" >
+          <a class="navbar-brand" href="{%url 'home'%}" style="float:left">
+            <img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px; position:absolute; top:7px; left:5px;" >
+          </a>
+        </div>
         {% if request.user.is_authenticated and request.user.email_auth%}
-        <form class="navbar-form navbar-left" role="search" action="" method="GET">
+        <form class="navbar-form navbar-right" role="search" action="" method="GET">
           {%csrf_token%}
           <div class="form-group">
-              <select name="type">
-                  <option value="all">전체</option>
-                  <option value="content">내용</option>
-                  <option value="hashtag">해시태그</option>
+              <select name="type" id="select1">
+                  <option value="all">&nbsp;전체</option>
+                  <option value="content">&nbsp;내용</option>
+                  <option value="hashtag">&nbsp;해시태그</option>
                   <option value="author">작성자</option>
               </select>
-              <input class="form-control me-2" name="keyword" value="{{ keyword|default_if_none:'' }}" type="search" placeholder="키워드를 입력하세요" aria-label="Search" style="width:150px; height:30px">
-              <button id="searchbutton" type="submit"> 검색 </button>
-
-              <div id = "menubar">
-                <ul class="nav nav-right">
-                  <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
-                  <li><a class="navbar-brand" href="{%url 'profile' request.user.id %}">마이페이지</a></li>
-                  <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
-                </ul>      
-              </div>
-          </div>
-        </form>
+              <input id="keywordbox" name="keyword" value="{{ keyword|default_if_none:'' }}" type="search" placeholder="키워드를 입력하세요" aria-label="Search">
+              <button id="searchbutton" type="submit">검색</button>
+            </form>
+                <ul class="nav nav-tab navbar-right" id="menubar">
+                  <li role="presentation"><a href="{%url 'new'%}" class="menubardetail">게시물 작성</a></li>
+                  <li role="presentation"><a href="{%url 'profile' request.user.id %}" class="menubardetail">마이페이지</a></li>
+                  <li role="presentation"><a href="{%url 'logout'%}" class="menubardetail">로그아웃</a></li>
+                </ul>
+          
       </div>
     </nav>
   </div>
@@ -100,3 +145,70 @@
 {% block content %}
 {% endblock %}
 
+
+
+<!-- <style>
+
+  * {font-family: 'Noto Sans KR', sans-serif; }
+
+  #searchbutton {background-color : #5B9BD5; 
+    color: white; 
+    font-size: 7.5px;
+    text-align : center;
+    width:50px; height:30px;
+    border-radius: 5px;
+    border-style : none;
+  }
+
+  .menu {
+    font-size:7.5px;
+    font-style:normal;
+    color : black;
+  }
+  #menubar ul li {
+    
+    display : inline;
+    text-align: center;
+    line-height: 10%;
+    height:10%;
+  }
+</style>
+</head>
+<body>
+{% load static %}
+<div class="container">
+<div style="padding:auto; margin:auto;"><a class="navbar-brand"  href="{%url 'home'%}" >
+<img alt="Brand" src="{% static 'sunbaenim.PNG' %}" style="width: 100px;"></a>
+</div>
+
+<nav class="navbar navbar-light bg-light" style='background-color:white !important'>
+<div class="container-fluid" >
+  
+
+  <form class="navbar-form navbar-left" role="search" action="" method="GET">
+    {%csrf_token%}
+    <div class="form-group">
+        <select name="type">
+            <option value="all">전체</option>
+            <option value="content">내용</option>
+            <option value="hashtag">해시태그</option>
+            <option value="author">작성자</option>
+        </select>
+        <input class="form-control me-2" name="keyword" value="{{ keyword|default_if_none:'' }}" type="search" placeholder="키워드를 입력하세요" aria-label="Search" style="width:150px; height:30px">
+        <button id="searchbutton" type="submit"> 검색 </button>
+
+        <div id = "menubar">
+          <ul class="nav nav-right">
+            <li><a class="navbar-brand" href="{%url 'new'%}">게시물 작성</a></li>
+            <li><a class="navbar-brand" href="{%url 'profile' request.user.id %}">마이페이지</a></li>
+            <li><a class="navbar-brand" href="{%url 'logout'%}">로그아웃</a></li>
+          </ul>      
+        </div>
+    </div>
+  </form>
+</div>
+</nav>
+</div>
+
+</body>
+</html>
